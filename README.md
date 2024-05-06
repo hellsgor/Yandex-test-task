@@ -1,1 +1,0 @@
-# Yandex-test-task

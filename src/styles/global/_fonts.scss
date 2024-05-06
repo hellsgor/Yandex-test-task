@@ -1,0 +1,57 @@
+@mixin FontFace($font-family) {
+  font-family: $font-family;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  @include FontFace(GolosText);
+  src: local('Golos Text'),
+  url('@fonts/GolosText-Regular.woff2') format('woff2'),
+  url('@fonts/GolosText-Regular.woff') format('woff');
+  font-weight: 400;
+}
+
+@font-face {
+  @include FontFace(GolosText);
+  src: local('Golos Text'),
+  url('@fonts/GolosText-Medium.woff2') format('woff2'),
+  url('@fonts/GolosText-Medium.woff') format('woff');
+  font-weight: 500;
+}
+
+@font-face {
+  @include FontFace(GolosText);
+  src: local('Golos Text'),
+  url('@fonts/GolosText-SemiBold.woff2') format('woff2'),
+  url('@fonts/GolosText-SemiBold.woff') format('woff');
+  font-weight: 600;
+}
+
+@font-face {
+  @include FontFace(GolosText);
+  src: local('Golos Text'),
+  url('@fonts/GolosText-Bold.woff2') format('woff2'),
+  url('@fonts/GolosText-Bold.woff') format('woff');
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: Merriweather;
+  font-style: normal;
+  font-display: swap;
+  src: local('Merriweather'),
+  url('@fonts/Merriweather-Regular.woff2') format('woff2'),
+  url('@fonts/Merriweather-Regular.woff') format('woff');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: Merriweather;
+  font-style: normal;
+  font-display: swap;
+  src: local('Merriweather'),
+  url('@fonts/Merriweather-Bold.woff2') format('woff2'),
+  url('@fonts/Merriweather-Bold.woff') format('woff');
+  font-weight: 700;
+}
