@@ -41,7 +41,7 @@ module.exports = {
     'no-console': 'warn',
     'no-alert': 'warn',
     'prettier/prettier': [
-      'warn', { endOfLine: 'auto' },
+      'warn', {endOfLine: 'auto'},
     ],
   },
 };
