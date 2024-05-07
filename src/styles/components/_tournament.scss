@@ -1,0 +1,73 @@
+@import '../global/colors';
+@import '../global/mixins/media';
+
+.tournament {
+  margin-bottom: 200px;
+  
+  &__wrapper {
+    display: flex;
+    align-items: center;
+    column-gap: 44px;
+  }
+  
+  &__decor {
+    flex: 0 0 474px;
+  }
+  
+  &__main {
+    flex: 1;
+  }
+  
+  &__heading {
+    margin-bottom: 60px;
+  }
+  
+  &__table {
+    width: 100%;
+    margin-bottom: 48px;
+    border-collapse: collapse;
+    
+    &-row:not(:last-child) {
+      border-bottom: 1px solid $gray;
+    }
+    
+    &-label,
+    &-value-cell {
+      padding-top: 16px;
+      padding-bottom: 16px;
+    }
+    
+    &-label {
+      width: 306px;
+      padding-right: 16px;
+      border-right: 1px solid $gray;
+      text-align: left;
+      
+      span {
+        opacity: .7;
+        font-weight: 400;
+      }
+    }
+    
+    &-value-cell {
+      padding-left: 16px;
+    }
+    
+    &-description {
+      display: none;
+      opacity: .7;
+      margin-bottom: 12px;
+    }
+    
+    &-value {
+      display: flex;
+      column-gap: 12px;
+      font-weight: 600;
+      
+      span:not(:last-child) {
+        text-decoration: line-through $red;
+      }
+    }
+  }
+  
+}

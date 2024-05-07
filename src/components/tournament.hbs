@@ -10,10 +10,12 @@
       <table class="tournament__table">
         {{#each this.tournamentTable}}
           <tr class="tournament__table-row">
-            <th class="tournament__table-label" scope="row">{{{this.label}}}</th>
+            <th class="tournament__table-label" scope="row">
+              <span>{{{this.label}}}</span>
+            </th>
             <td class="tournament__table-value-cell">
-              <span class="table-description">{{{this.label}}}</span>
-              <p class="table-value">
+              <span class="tournament__table-description">{{{this.label}}}</span>
+              <p class="tournament__table-value">
                 {{#each this.value}}
                   <span>{{{this}}}</span>
                 {{/each}}
@@ -22,6 +24,9 @@
           </tr>
         {{/each}}
       </table>
+      <a href="#" class="tournament__to-admin" target="_blank">
+        По&nbsp;всем вопросам обращаться в&nbsp;администрацию к&nbsp;К.&nbsp;Михельсону
+      </a>
     </div>
   </div>
 </div>
