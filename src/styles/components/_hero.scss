@@ -178,6 +178,10 @@
     display: flex;
     justify-content: space-between;
     column-gap: 16px;
+    
+    & .button:not(.button_primary) span {
+      max-width: 170px;
+    }
   }
   
   @include max-media(1240px) {
