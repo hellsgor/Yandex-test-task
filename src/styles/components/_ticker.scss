@@ -1,0 +1,62 @@
+@import '../global/colors';
+@import '../global/mixins/media';
+@import '../animations/scroll';
+
+.marquee {
+  animation: scroll 24s linear infinite;
+}
+
+.ticker {
+  $gap: 12px;
+  
+  display: flex;
+  overflow: hidden;
+  width: 100%;
+  padding: 18px 0;
+  column-gap: $gap;
+  background-color: $red;
+  
+  &__wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    column-gap: $gap;
+    -webkit-transition-timing-function: linear !important;
+    transition-timing-function: linear !important;
+  }
+  
+  &__slide {
+    position: relative;
+    width: fit-content !important;
+    padding-right: 18px;
+    font-family: Merriweather, serif;
+    font-size: 22px;
+    font-weight: 400;
+    text-transform: uppercase;
+    line-height: 1.1;
+    white-space: nowrap;
+    color: $white;
+    
+    &::after {
+      position: absolute;
+      top: 50%;
+      right: 0;
+      display: block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: $white;
+      content: '';
+      transform: translateY(-50%);
+    }
+  }
+  
+  @include xs-media {
+    padding: 10px 0;
+    
+    &__slide {
+      font-size: 16px;
+    }
+  }
+}
+
