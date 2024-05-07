@@ -4,4 +4,6 @@
 @import 'global/colors';
 @import 'global/mixins/index';
 @import 'global/typography';
-@import 'global/section';
+@import 'global/base';
+
+@import '@styles/components/hero';

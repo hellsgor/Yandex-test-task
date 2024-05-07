@@ -1,0 +1,16 @@
+@keyframes sun-text-rotate {
+  from {
+    transform: rotate(0);
+  }
+  
+  to {
+    transform: rotate(359deg);
+  }
+}
+
+@keyframes sunrise {
+  from {
+    scale: .2;
+    transform: translateY(1300px);
+  }
+}
