@@ -1,3 +1,6 @@
+@import '../global/colors';
+@import '../global/mixins/media';
+
 body,
 .text {
   font-family: GolosText, sans-serif;
@@ -30,8 +33,9 @@ h1,
 h2,
 .heading_1,
 .heading_2 {
-  font-size: 60px;
-  line-height: 1.1;
+  font-size: 65px;
+  line-height: 1;
+  letter-spacing: -1.5px;
 }
 
 h3,
@@ -53,4 +57,32 @@ h4,
 a {
   text-decoration: none;
   color: $blue;
+}
+
+@include max-media(1240px) {
+  h1,
+  .heading_1 {
+    font-size: 48px;
+  }
+}
+
+@include max-media(640px) {
+  h1,
+  .heading_1 {
+    font-size: 37px;
+    line-height: 1.1;
+    letter-spacing: 1px;
+  }
+}
+
+@include max-media(370px) {
+  h1,
+  .heading_1 {
+    font-size: 28px;
+  }
+  
+  body,
+  .text {
+    font-size: 16px;
+  }
 }

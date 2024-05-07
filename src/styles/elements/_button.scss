@@ -1,0 +1,54 @@
+@import '../global/colors';
+@import '../global/mixins/media';
+
+.button {
+  display: flex;
+  width: 100%;
+  height: 72px;
+  padding: 0 20px;
+  border: 2px solid $black;
+  border-radius: 66px;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 500;
+  text-align: center;
+  line-height: 1.3;
+  background-color: transparent;
+  color: $black;
+  cursor: pointer;
+  transition: border-color .3s ease-out, background-color .3s ease-in-out, color .3s ease-in-out;
+  
+  @media (hover: hover) {
+    &:hover {
+      background-color: $black;
+      color: $white;
+    }
+    
+  }
+  
+  @include max-media(880px) {
+    border-color: rgba(255, 255, 255, .9);
+    background-color: rgba(255, 255, 255, .9);
+  }
+  
+  &_primary {
+    border-color: $black;
+    background-color: $black;
+    color: $white;
+    
+    @media (hover: hover) {
+      &:hover {
+        border-color: $yellow;
+        background-color: $yellow;
+        color: $black;
+      }
+    }
+  }
+  
+  @include max-media(640px) {
+    height: 47px;
+    padding: 10px 20px;
+    white-space: nowrap;
+  }
+}

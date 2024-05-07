@@ -1,0 +1,434 @@
+@import '../global/colors';
+@import '../global/mixins/media';
+
+@import '../animations/sun';
+@import '../animations/figures';
+@import '../animations/show-content';
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  height: 700px;
+  background-color: $beige;
+  
+  &__background {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 1920px;
+    height: 100%;
+    transform: translateX(-50%);
+    mix-blend-mode: color-burn;
+    
+    img {
+      width: auto;
+      height: 100%;
+    }
+  }
+  
+  &__image {
+    position: absolute;
+    inset: 0;
+  }
+  
+  &__sun {
+    position: absolute;
+    top: -42px;
+    right: -41px;
+    display: flex;
+    width: 660px;
+    height: 660px;
+    border-radius: 100%;
+    align-items: center;
+    justify-content: center;
+    background-color: $yellow;
+    animation: 3s sunrise both;
+    
+    &-text {
+      width: 97%;
+      height: 97%;
+      animation: 36s linear sun-text-rotate infinite;
+      mix-blend-mode: overlay;
+      
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+  
+  &__composition {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    animation: .4s emersion ease-in-out;
+  }
+  
+  &__queen,
+  &__king,
+  &__city,
+  &__board,
+  &__path,
+  &__horse,
+  &__front {
+    position: absolute;
+    display: block;
+    
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  
+  &__queen {
+    top: 171px;
+    right: 103px;
+    width: 113px;
+    height: 252px;
+    animation: .5s 1.3s emergence ease-in-out both;
+    rotate: 7.59deg;
+  }
+  
+  &__king {
+    top: 275px;
+    right: 446px;
+    width: 104px;
+    height: 256px;
+    animation: .5s 1s emergence ease-in-out both;
+    rotate: -6deg;
+  }
+  
+  &__city {
+    bottom: 0;
+    left: -188px;
+    width: 1625px;
+    height: 430px;
+  }
+  
+  &__board {
+    bottom: 0;
+    left: -189px;
+    width: 1625px;
+    height: 430px;
+    mix-blend-mode: color-burn;
+  }
+  
+  &__path {
+    bottom: 0;
+    left: -193px;
+    width: 1607px;
+    height: 440px;
+  }
+  
+  &__horse {
+    right: 259px;
+    bottom: -36px;
+    width: 154px;
+    height: 244px;
+    transform-origin: bottom center;
+    animation: .5s 2.3s emergence ease-in-out both,
+    .23s 2.5s shaking ease-in-out 2 both;
+    rotate: -10.6deg;
+  }
+  
+  &__front {
+    right: -29px;
+    bottom: 20px;
+    width: 83px;
+    height: 122px;
+    animation: .5s 1.7s emergence-front ease-in-out both;
+  }
+  
+  &__content {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 543px;
+    padding: 126px 0 0;
+    animation: .5s 3s show-content ease-in-out both;
+  }
+  
+  &__heading {
+    margin-bottom: 26px;
+    
+    span {
+      display: inline-block;
+      width: 100%;
+      
+      &:nth-child(2) {
+        text-align: center;
+      }
+      
+      &:nth-child(3) {
+        text-align: right;
+      }
+    }
+  }
+  
+  &__description {
+    margin-bottom: 40px;
+    font-size: 18px;
+    text-align: center;
+    line-height: 1.3;
+  }
+  
+  &__buttons {
+    display: flex;
+    justify-content: space-between;
+    column-gap: 16px;
+  }
+  
+  @include max-media(1240px) {
+    height: 660px;
+    
+    &__image {
+      top: unset;
+      right: 240px;
+      left: unset;
+      height: 100%;
+    }
+    
+    &__composition {
+      bottom: -21px;
+    }
+    
+    &__sun {
+      right: -246px;
+    }
+    
+    &__queen {
+      right: -122px;
+    }
+    
+    &__king {
+      right: 232px;
+    }
+    
+    &__front {
+      right: -253px;
+    }
+    
+    &__horse {
+      right: 48px;
+    }
+    
+    &__content {
+      max-width: 400px;
+    }
+  }
+  
+  @include max-media(1024px) {
+    height: 600px;
+    
+    &__image {
+      left: 216px;
+    }
+    
+    &__front {
+      display: none;
+    }
+    
+    &__sun {
+      top: -80px;
+      right: unset;
+      left: 298px;
+      scale: .9;
+    }
+    
+    &__composition {
+      bottom: -67px;
+      left: -230px;
+    }
+    
+    &__path {
+      bottom: -2px;
+      left: -190px;
+    }
+    
+    &__horse {
+      bottom: -27px;
+      left: 494px;
+    }
+    
+    &__queen {
+      top: 200px;
+      left: 640px;
+    }
+    
+    &__king {
+      top: 270px;
+      left: 397px;
+    }
+    
+    &__queen,
+    &__king,
+    &__city,
+    &__board,
+    &__path,
+    &__horse {
+      right: unset;
+      scale: .7;
+    }
+    
+    &__content {
+      padding-top: 96px;
+    }
+  }
+  
+  @include max-media(880px) {
+    height: 980px;
+    
+    &__buttons .button:not(.button_primary) {
+    
+    }
+    
+    &__container {
+      display: flex;
+      width: 100%;
+      justify-content: center;
+    }
+    
+    &__image {
+      inset: 0;
+    }
+    
+    &__queen,
+    &__king,
+    &__city,
+    &__board,
+    &__path,
+    &__horse,
+    &__front {
+      scale: .9;
+    }
+    
+    &__sun {
+      top: unset;
+      bottom: 75px;
+      left: 50%;
+      width: 500px;
+      height: 500px;
+      transform: translateX(-50%);
+      scale: 1;
+    }
+    
+    &__composition {
+      bottom: -20px;
+      left: -86%;
+    }
+    
+    &__horse {
+      left: 227px;
+    }
+    
+    &__king {
+      top: unset;
+      bottom: 130px;
+      left: 104px;
+    }
+    
+    &__queen {
+      top: unset;
+      bottom: 210px;
+      left: 410px;
+    }
+    
+    &__front {
+      right: unset;
+      bottom: 20px;
+      left: 558px;
+      display: block;
+    }
+  }
+  
+  @include max-media(640px) {
+    width: 100%;
+    height: 774px;
+    
+    &__container {
+      padding-right: 20px;
+      padding-left: 20px;
+    }
+    
+    &__content {
+      padding-top: 90px;
+    }
+    
+    &__heading {
+      margin-bottom: 22px;
+    }
+    
+    &__description {
+      margin-bottom: 30px;
+      text-align: left;
+    }
+    
+    &__buttons {
+      flex-direction: column;
+      row-gap: 14px;
+    }
+    
+    &__king,
+    &__horse {
+      scale: .545;
+    }
+    
+    &__city,
+    &__board,
+    &__path {
+      scale: .545;
+    }
+    
+    &__sun {
+      bottom: 67px;
+      left: 178px;
+      width: 298px;
+      height: 298px;
+      
+      &-text {
+        animation: unset;
+      }
+    }
+    
+    &__composition {
+      bottom: -96px;
+      left: -583px;
+    }
+    
+    &__path {
+      left: -188px;
+    }
+    
+    &__queen {
+      bottom: 95px;
+      left: 204px;
+      scale: .4;
+      rotate: 16deg
+    }
+    
+    &__king {
+      bottom: 44px;
+      left: 41px;
+      scale: .45;
+    }
+    
+    &__horse {
+      bottom: -14px;
+      left: 129px;
+      scale: .5;
+    }
+    
+    &__front {
+      display: none;
+    }
+  }
+  
+  @include max-media(370px) {
+    
+    &__description {
+      font-size: 16px;
+    }
+  }
+}

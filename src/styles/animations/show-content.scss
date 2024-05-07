@@ -1,0 +1,14 @@
+@keyframes show-content {
+  from {
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  99% {
+    pointer-events: none;
+  }
+  
+  to {
+    opacity: 1;
+  }
+}

@@ -12,6 +12,12 @@
   }
 }
 
+@mixin max-media($width) {
+  @media (max-width: $width) {
+    @content;
+  }
+}
+
 @mixin tablet-media {
   @include media($mediaTablet) {
     @content;
