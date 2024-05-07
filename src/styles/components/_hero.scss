@@ -218,4 +218,62 @@
       max-width: 400px;
     }
   }
+  
+  @include max-media(1024px) {
+    height: 600px;
+    
+    &__image {
+      left: 216px;
+    }
+    
+    &__front {
+      display: none;
+    }
+    
+    &__sun {
+      top: -80px;
+      right: unset;
+      left: 298px;
+      scale: .9;
+    }
+    
+    &__composition {
+      bottom: -67px;
+      left: -230px;
+    }
+    
+    &__path {
+      bottom: -2px;
+      left: -190px;
+    }
+    
+    &__horse {
+      bottom: -27px;
+      left: 494px;
+    }
+    
+    &__queen {
+      top: 200px;
+      left: 640px;
+    }
+    
+    &__king {
+      top: 270px;
+      left: 397px;
+    }
+    
+    &__queen,
+    &__king,
+    &__city,
+    &__board,
+    &__path,
+    &__horse {
+      right: unset;
+      scale: .7;
+    }
+    
+    &__content {
+      padding-top: 96px;
+    }
+  }
 }
