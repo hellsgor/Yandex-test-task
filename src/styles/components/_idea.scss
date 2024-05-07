@@ -1,0 +1,14 @@
+.idea {
+  padding-top: 80px;
+  margin-bottom: 64px;
+  
+  &__wrapper {
+    display: flex;
+    align-items: center;
+    column-gap: 64px;
+  }
+  
+  &__image {
+    flex: 0 0 394px;
+  }
+}
