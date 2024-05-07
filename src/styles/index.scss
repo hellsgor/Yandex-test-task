@@ -6,4 +6,6 @@
 @import 'global/typography';
 @import 'global/base';
 
-@import '@styles/components/hero';
+@import 'components/hero';
+
+@import "elements/button";
