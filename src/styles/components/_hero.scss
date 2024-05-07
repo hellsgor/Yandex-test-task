@@ -1,3 +1,6 @@
+@import '../global/colors';
+@import '../global/mixins/media';
+
 @import '../animations/sun';
 @import '../animations/figures';
 @import '../animations/show-content';
@@ -10,11 +13,20 @@
   
   &__background {
     position: absolute;
-    inset: 0;
+    top: 0;
+    left: 50%;
+    width: 1920px;
+    height: 100%;
+    transform: translateX(-50%);
     mix-blend-mode: color-burn;
+    
+    img {
+      width: auto;
+      height: 100%;
+    }
   }
   
-  &__image-wrapper {
+  &__image {
     position: absolute;
     inset: 0;
   }
@@ -110,7 +122,7 @@
   }
   
   &__horse {
-    right: 608px;
+    right: 259px;
     bottom: -36px;
     width: 154px;
     height: 244px;
@@ -121,7 +133,7 @@
   }
   
   &__front {
-    right: 321px;
+    right: -29px;
     bottom: 20px;
     width: 83px;
     height: 122px;
