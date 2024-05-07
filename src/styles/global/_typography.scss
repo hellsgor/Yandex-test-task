@@ -74,3 +74,15 @@ a {
     letter-spacing: 1px;
   }
 }
+
+@include max-media(370px) {
+  h1,
+  .heading_1 {
+    font-size: 28px;
+  }
+  
+  body,
+  .text {
+    font-size: 16px;
+  }
+}

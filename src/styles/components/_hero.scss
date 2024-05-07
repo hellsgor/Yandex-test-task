@@ -424,4 +424,11 @@
       display: none;
     }
   }
+  
+  @include max-media(370px) {
+    
+    &__description {
+      font-size: 16px;
+    }
+  }
 }
