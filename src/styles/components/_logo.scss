@@ -1,0 +1,51 @@
+@import '@styles/global/colors';
+@import '@styles/global/colors';
+
+.logo {
+  display: flex;
+  align-items: center;
+  column-gap: 6px;
+  
+  &__horses {
+    display: flex;
+    align-items: center;
+    column-gap: 2px;
+  }
+  
+  &__icon {
+    display: flex;
+    width: 22px;
+    height: 31px;
+    align-items: center;
+    justify-content: center;
+    
+    svg {
+      width: 100%;
+      fill: $logo-gray;
+    }
+  }
+  
+  &__text {
+    max-width: 147px;
+    font-size: 17px;
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 1.08;
+    color: $logo-gray;
+  }
+  
+  @include xs-media {
+    &__horses {
+      column-gap: 1px;
+    }
+    
+    &__icon {
+      width: 19px;
+      height: 27px;
+    }
+    
+    &__text {
+      font-size: 14px;
+    }
+  }
+}
