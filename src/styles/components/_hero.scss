@@ -1,5 +1,6 @@
 @import '../animations/sun';
 @import '../animations/figures';
+@import '../animations/show-content';
 
 .hero {
   position: relative;
@@ -133,6 +134,7 @@
     width: 100%;
     max-width: 543px;
     padding: 126px 0 0;
+    animation: .5s 3s show-content ease-in-out both;
   }
   
   &__heading {
