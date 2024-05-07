@@ -45,8 +45,8 @@
     animation: 3s sunrise both;
     
     &-text {
-      width: 634px;
-      height: 634px;
+      width: 97%;
+      height: 97%;
       animation: 36s linear sun-text-rotate infinite;
       mix-blend-mode: overlay;
       
@@ -274,6 +274,72 @@
     
     &__content {
       padding-top: 96px;
+    }
+  }
+  
+  @include max-media(880px) {
+    height: 980px;
+    
+    &__buttons .button:not(.button_primary) {
+    
+    }
+    
+    &__container {
+      display: flex;
+      width: 100%;
+      justify-content: center;
+    }
+    
+    &__image {
+      inset: 0;
+    }
+    
+    &__queen,
+    &__king,
+    &__city,
+    &__board,
+    &__path,
+    &__horse,
+    &__front {
+      scale: .9;
+    }
+    
+    &__sun {
+      top: unset;
+      bottom: 75px;
+      left: 50%;
+      width: 500px;
+      height: 500px;
+      transform: translateX(-50%);
+      scale: 1;
+    }
+    
+    &__composition {
+      bottom: -20px;
+      left: -86%;
+    }
+    
+    &__horse {
+      left: 227px;
+    }
+    
+    &__king {
+      top: unset;
+      bottom: 130px;
+      left: 104px;
+    }
+    
+    &__queen {
+      top: unset;
+      bottom: 210px;
+      left: 410px;
+    }
+    
+    &__front {
+      right: unset;
+      bottom: 20px;
+      left: 558px;
+      display: block;
     }
   }
 }

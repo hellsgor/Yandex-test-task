@@ -1,3 +1,6 @@
+@import '../global/colors';
+@import '../global/mixins/media';
+
 .button {
   display: flex;
   width: 100%;
@@ -24,7 +27,13 @@
     
   }
   
+  @include max-media(880px) {
+    border-color: rgba(255, 255, 255, .9);
+    background-color: rgba(255, 255, 255, .9);
+  }
+  
   &_primary {
+    border-color: $black;
     background-color: $black;
     color: $white;
     
@@ -36,5 +45,4 @@
       }
     }
   }
-  
 }

@@ -18,5 +18,9 @@ html {
     @include max-media(1024px) {
       max-width: 840px;
     }
+    
+    @include max-media(880px) {
+      max-width: 640px;
+    }
   }
 }
