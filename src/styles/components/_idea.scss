@@ -1,14 +1,77 @@
+@import '../global/mixins/media';
+
 .idea {
   padding-top: 80px;
   margin-bottom: 64px;
   
   &__wrapper {
+    position: relative;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     column-gap: 64px;
+  }
+  
+  &__heading {
+    max-width: 744px;
   }
   
   &__image {
     flex: 0 0 394px;
+  }
+  
+  @include max-media(880px) {
+    &__heading {
+      max-width: unset;
+      
+      & span:nth-child(1) {
+        display: block;
+        padding-bottom: 352px;
+      }
+    }
+    
+    &__image {
+      position: absolute;
+      top: 180px;
+      left: 50%;
+      width: 394px;
+      transform: translateX(-50%);
+    }
+  }
+  
+  @include max-media(640px) {
+    padding-top: 48px;
+    margin-bottom: 21px;
+    
+    &__heading {
+      & span:nth-child(1) {
+        padding-bottom: 300px;
+      }
+    }
+    
+    &__image {
+      top: 162px;
+      width: 335px;
+    }
+  }
+  
+  @include xs-media {
+    &__heading {
+      & span:nth-child(1) {
+        padding-bottom: 260px;
+      }
+    }
+    
+    &__image {
+      top: 176px;
+    }
+  }
+  
+  @include max-media(351px) {
+    
+    &__image {
+      top: 233px;
+      width: 280px;
+    }
   }
 }
