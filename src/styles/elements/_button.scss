@@ -45,4 +45,10 @@
       }
     }
   }
+  
+  @include max-media(640px) {
+    height: 47px;
+    padding: 10px 20px;
+    white-space: nowrap;
+  }
 }

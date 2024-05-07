@@ -22,5 +22,10 @@ html {
     @include max-media(880px) {
       max-width: 640px;
     }
+    
+    @include max-media(640px) {
+      width: 100%;
+      max-width: unset;
+    }
   }
 }
