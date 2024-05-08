@@ -98,4 +98,22 @@
     }
   }
   
+  @include max-media(1240px) {
+    &__decor {
+      flex-basis: 320px;
+    }
+    
+    &__basis,
+    &__overlay {
+      width: 357px;
+      height: 393px;
+    }
+    
+    &__hand {
+      right: 33px;
+      bottom: 53px;
+      width: 116px;
+      height: 157px;
+    }
+  }
 }
