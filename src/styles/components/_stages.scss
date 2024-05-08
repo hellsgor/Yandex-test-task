@@ -1,0 +1,37 @@
+@import '../global/colors';
+@import '../global/mixins/media';
+
+.stages {
+  &__heading {
+    display: inline;
+  }
+  
+  &__to-source {
+    display: inline-block;
+    max-width: 280px;
+    margin-left: 20px;
+  }
+  
+  &__heading-wrapper {
+    display: inline-block;
+    max-width: 806px;
+    margin-bottom: 52px;
+  }
+  
+  @include max-media(640px) {
+    &__to-source {
+      max-width: 296px;
+      margin-left: 0;
+    }
+    
+    &__heading {
+      display: block;
+      max-width: unset;
+      margin-bottom: 10px;
+    }
+    
+    &__heading-wrapper {
+      margin-bottom: 148px;
+    }
+  }
+}

@@ -40,8 +40,8 @@ h2,
 
 h3,
 .heading_3 {
-  font-size: 54px;
-  line-height: 1.2;
+  font-size: 58px;
+  line-height: 1.13;
 }
 
 h4,
@@ -69,6 +69,11 @@ a {
 }
 
 @include max-media(880px) {
+  h3,
+  .heading_3 {
+    font-size: 54px;
+  }
+  
   h4,
   .heading_4 {
     font-size: 32px;
@@ -83,6 +88,11 @@ a {
     font-size: 37px;
     line-height: 1.1;
     letter-spacing: 1px;
+  }
+  
+  h3,
+  .heading_3 {
+    font-size: 36px;
   }
   
   h4,
@@ -100,6 +110,11 @@ a {
   h1,
   .heading_1 {
     font-size: 28px;
+  }
+  
+  h3,
+  .heading_3 {
+    font-size: 32px;
   }
   
   body,
