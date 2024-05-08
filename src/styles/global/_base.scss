@@ -21,21 +21,18 @@ body {
     &__container {
       max-width: 1000px;
     }
-    
   }
   
   @include max-media(1024px) {
     &__container {
       max-width: 840px;
     }
-    
   }
   
   @include max-media(880px) {
     &__container {
       max-width: 640px;
     }
-    
   }
   
   @include max-media(640px) {
