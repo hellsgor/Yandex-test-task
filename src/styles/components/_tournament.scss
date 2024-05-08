@@ -23,8 +23,8 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 530px;
-    height: 555px;
+    width: 536px;
+    height: 589px;
     transform: translate(-50%, -50%);
   }
   
@@ -47,12 +47,12 @@
   }
   
   &__heading {
-    margin-bottom: 60px;
+    margin-bottom: 45px;
   }
   
   &__table {
     width: 100%;
-    margin-bottom: 48px;
+    margin-bottom: 34px;
     border-collapse: collapse;
     
     &-row:not(:last-child) {
@@ -62,7 +62,7 @@
     &-label,
     &-value-cell {
       padding-top: 16px;
-      padding-bottom: 16px;
+      padding-bottom: 15px;
     }
     
     &-label {
