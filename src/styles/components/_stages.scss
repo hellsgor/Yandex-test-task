@@ -2,6 +2,13 @@
 @import '../global/mixins/media';
 
 .stages {
+  overflow: hidden;
+  margin-bottom: 200px;
+  
+  &__wrapper {
+    position: relative;
+  }
+  
   &__heading {
     display: inline;
   }
@@ -16,6 +23,90 @@
     display: inline-block;
     max-width: 806px;
     margin-bottom: 52px;
+  }
+  
+  &__list {
+    display: grid;
+    padding: 0;
+    margin: 0;
+    grid-template-columns: 1fr 1fr 1fr;
+    list-style-type: none;
+    counter-reset: item;
+    gap: 20px;
+  }
+  
+  &__item {
+    position: relative;
+    display: block;
+    min-height: 112px;
+    padding: 20px 22px 20px 72px;
+    font-weight: 500;
+    
+    &::before,
+    &-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-repeat: no-repeat;
+      background-size: cover;
+      content: '';
+    }
+    
+    &::before {
+      z-index: -1;
+      opacity: 0.8;
+      background-image: url('/images/stages/paper.png');
+    }
+    
+    &-overlay {
+      z-index: 1;
+      mix-blend-mode: color-burn;
+    }
+    
+    &::after {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      display: flex;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      align-items: center;
+      justify-content: center;
+      background-color: $white;
+      content: counter(list-item);
+      counter-increment: list-item;
+    }
+    
+    &_high {
+      grid-row: span 2;
+    }
+    
+    &_long {
+      padding-right: 300px;
+      grid-column: span 2;
+    }
+  }
+  
+  &__plain {
+    position: absolute;
+    right: -50px;
+    bottom: 45px;
+    z-index: 20;
+    width: 375px;
+    transform: rotate(-15.31deg);
+  }
+  
+  @include max-media(1240px) {
+    &__plain {
+      right: -134px;
+    }
+    
+    &__item_long {
+      padding-right: 260px;
+    }
   }
   
   @include max-media(640px) {
