@@ -1,0 +1,45 @@
+@import '../global/colors';
+
+.slider-button {
+  display: flex;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  background-color: $txt-black;
+  cursor: pointer;
+  transition: background-color .2s ease-in-out;
+  
+  &__arrow {
+    display: flex;
+    width: 14px;
+    height: 20px;
+    padding-left: 2px;
+    align-items: center;
+    justify-content: center;
+    
+    svg {
+      stroke: $white;
+      fill: none;
+    }
+  }
+  
+  &_prew {
+    .slider-button__arrow {
+      rotate: 180deg;
+    }
+  }
+  
+  @media (hover: hover) {
+    &:hover {
+      background-color: $yellow;
+    }
+  }
+  
+  &:disabled {
+    opacity: .2;
+    pointer-events: none;
+  }
+}
