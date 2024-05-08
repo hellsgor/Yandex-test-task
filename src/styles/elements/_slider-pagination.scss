@@ -1,0 +1,19 @@
+@import '../global/colors';
+
+.slider-num-pagination {
+  display: flex;
+  align-items: center;
+  column-gap: 6px;
+  
+  &__bulit {
+    display: block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: $slider-bulit;
+    
+    &_active {
+      background-color: $txt-black;
+    }
+  }
+}
