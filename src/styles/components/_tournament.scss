@@ -1,6 +1,8 @@
 @import '../global/colors';
 @import '../global/mixins/media';
 
+@import '@styles/animations/hand-rotate';
+
 .tournament {
   margin-bottom: 200px;
   
@@ -11,7 +13,33 @@
   }
   
   &__decor {
+    position: relative;
     flex: 0 0 474px;
+    align-self: stretch;
+  }
+  
+  &__basis,
+  &__overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 530px;
+    height: 555px;
+    transform: translate(-50%, -50%);
+  }
+  
+  &__hand {
+    position: absolute;
+    right: 50px;
+    bottom: -68px;
+    width: 174px;
+    height: 235px;
+    animation: 10s hand-rotate linear both infinite;
+    rotate: 39.9deg;
+  }
+  
+  &__overlay {
+    mix-blend-mode: color-burn;
   }
   
   &__main {
