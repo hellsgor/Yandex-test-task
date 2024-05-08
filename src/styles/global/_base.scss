@@ -1,7 +1,12 @@
+@import '../global/colors';
 @import '../global/mixins/media';
 
 html {
   scroll-behavior: smooth;
+}
+
+body {
+  background-color: $white;
 }
 
 .section {
@@ -16,21 +21,18 @@ html {
     &__container {
       max-width: 1000px;
     }
-    
   }
   
   @include max-media(1024px) {
     &__container {
       max-width: 840px;
     }
-    
   }
   
   @include max-media(880px) {
     &__container {
       max-width: 640px;
     }
-    
   }
   
   @include max-media(640px) {

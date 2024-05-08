@@ -1,0 +1,36 @@
+<div class="tournament section">
+  <div class="tournament__wrapper section__container">
+    <div class="tournament__decor">
+      {{> elements/image-element parent='tournament' elemName='t-image' className='basis'}}
+      {{> elements/image-element parent='tournament' elemName='hand' className='hand'}}
+      {{> elements/image-element parent='tournament' elemName='overlay' className='overlay'}}
+    </div>
+    <div class="tournament__main">
+      <h4 class="tournament__heading heading heading_4">
+        <span>и&nbsp;Сеанс </span>
+        <span class="heading_highlighted">одновременной игры в&nbsp;шахматы на&nbsp;160 досках</span>
+        <span> гроссмейстера О.&nbsp;Бендера</span>
+      </h4>
+      <table class="tournament__table">
+        {{#each this.tournamentTable}}
+          <tr class="tournament__table-row">
+            <th class="tournament__table-label" scope="row">
+              <span>{{{this.label}}}</span>
+            </th>
+            <td class="tournament__table-value-cell">
+              <span class="tournament__table-description">{{{this.label}}}</span>
+              <p class="tournament__table-value">
+                {{#each this.value}}
+                  <span>{{{this}}}</span>
+                {{/each}}
+              </p>
+            </td>
+          </tr>
+        {{/each}}
+      </table>
+      <a href="#" class="tournament__to-admin" target="_blank">
+        По&nbsp;всем вопросам обращаться в&nbsp;администрацию к&nbsp;К.&nbsp;Михельсону
+      </a>
+    </div>
+  </div>
+</div>
