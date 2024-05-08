@@ -61,7 +61,9 @@ a {
 
 @include max-media(1240px) {
   h1,
-  .heading_1 {
+  h2,
+  .heading_1,
+  .heading_2 {
     font-size: 48px;
   }
 }
@@ -75,7 +77,9 @@ a {
 
 @include max-media(640px) {
   h1,
-  .heading_1 {
+  h2,
+  .heading_1,
+  .heading_2 {
     font-size: 37px;
     line-height: 1.1;
     letter-spacing: 1px;
