@@ -116,4 +116,33 @@
       height: 157px;
     }
   }
+  
+  @include max-media(1024px) {
+    &__hand {
+      bottom: 137px;
+    }
+  }
+  
+  @include max-media(880px) {
+    &__wrapper {
+      flex-direction: column;
+      row-gap: 64px;
+    }
+    
+    &__decor {
+      flex-basis: 400px;
+    }
+    
+    &__basis,
+    &__overlay {
+      width: 400px;
+      height: 436px;
+    }
+    
+    &__hand {
+      right: 168px;
+      bottom: -32px;
+      width: 132px;
+    }
+  }
 }
