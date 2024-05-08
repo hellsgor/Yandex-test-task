@@ -86,6 +86,10 @@ a {
     font-size: 29px;
     line-height: 1.33;
   }
+  
+  a {
+    font-size: 18px;
+  }
 }
 
 @include max-media(370px) {
