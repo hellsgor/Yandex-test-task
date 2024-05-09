@@ -1,3 +1,5 @@
+import { createElement } from '@/js/helpers/create-element.js';
+
 class Slider {
   sliderElem = null;
   params = null;
@@ -7,6 +9,7 @@ class Slider {
     prewButton: `${this.defaultSliderClassName}-button_prew`,
     nextButton: `${this.defaultSliderClassName}-button_next`,
     paginationWrapper: `${this.defaultSliderClassName}-pagination`,
+    paginationBulit: `${this.defaultSliderClassName}-pagination__bulit`,
     wrapper: `${this.defaultSliderClassName}-wrapper`,
     slide: `${this.defaultSliderClassName}-slide`,
   };
@@ -16,6 +19,7 @@ class Slider {
   paginationWrapper = null;
   wrapper = null;
   slides = null;
+  bulits = null;
 
   constructor(slider) {
     this.sliderElem = slider || null;
@@ -24,6 +28,7 @@ class Slider {
 
     this.getElements();
     this.setButtonsUnavailability();
+    this.createPagination();
   }
 
   /**
@@ -74,6 +79,43 @@ class Slider {
       this.prewButton.setAttribute('disabled', true);
     }
   }
+
+  /**
+   * @description Устанавливает пагинацию для слайдера в зависимости от параметров.
+   */
+  createPagination() {
+    /**
+     * @description Создает элементы пагинации в виде точек.
+     */
+    const setBulits = () => {
+      this.paginationWrapper.classList.add(
+        `${this.classNames.paginationWrapper}_bulits`,
+      );
+      for (let i = 0; i < this.slides.length; i++) {
+        this.paginationWrapper.appendChild(
+          createElement({
+            tag: 'span',
+            classes: this.classNames.paginationBulit,
+          }),
+        );
+      }
+
+      this.bulits = this.paginationWrapper.querySelectorAll(
+        `.${this.classNames.paginationBulit}`,
+      );
+    };
+
+    // Выбор типа пагинации
+    switch (this.params.pagination) {
+      case 'bulits':
+        setBulits();
+        break;
+
+      default:
+        setBulits();
+        break;
+    }
+  }
 }
 
 const sliderNameAttr = 'data-slider-name';
@@ -92,10 +134,15 @@ const slidersParams = {
    * slideClassName - css-класс контейнера слайдов;
    *
    * loop - зацикленность слайдера
+   *
+   * pagination - тип пагинации. Возможные значения: 'bulits' || 'nums' || true || false.
+   * true - пагинация включена. Тип пагинации по умолчанию - 'bulits'.
+   * false (или falsy-значение) - пагинация отключена.
    * */
   stages: {
     wrapperClassName: 'stages__list',
     loop: false,
+    pagination: 'bulits',
   },
 };
 
