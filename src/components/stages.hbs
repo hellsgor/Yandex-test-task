@@ -4,6 +4,7 @@
       <h3 class="stages__heading heading heading_3">Этапы преображения Васюков</h3>
       <a href="#" target="_blank" class="stages__to-source">Будущие источники обогащения васюкинцев</a>
     </div>
+
     <ol class="stages__list">
       {{#each stages}}
         <li class="stages__item{{#if this.mod}} stages__item_{{this.mod}}{{/if}}">
@@ -12,6 +13,13 @@
         </li>
       {{/each}}
     </ol>
+
     {{> elements/image-element parent='stages' elemName='plain'}}
+
+    <div class="stages__navigation">
+      {{> elements/slider-button prew=true classes='stages__slider-button stages__slider-button_prew'}}
+      <div class="slider-num-pagination stages__pagination"></div>
+      {{> elements/slider-button prew=false classes='stages__slider-button stages__slider-button_next'}}
+    </div>
   </div>
 </div>

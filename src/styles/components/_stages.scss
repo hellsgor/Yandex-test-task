@@ -251,9 +251,12 @@
       }
     }
     
+    &__heading-wrapper {
+      max-width: 335px;
+    }
+    
     &__heading {
       display: block;
-      max-width: unset;
       margin-bottom: 10px;
     }
     
@@ -261,6 +264,13 @@
       top: 180px;
       left: 50%;
       rotate: -18.73deg
+    }
+    
+    &__navigation {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      column-gap: 16px;
     }
   }
 }
