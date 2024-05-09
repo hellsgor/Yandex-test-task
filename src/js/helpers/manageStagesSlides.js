@@ -6,6 +6,8 @@ export function manageStagesSlides(isMobile, currentSlidesState) {
     return isMobile;
   }
 
+  console.log('go');
+
   const olElement = document.querySelector('.stages__list');
   olElement.innerHTML = '';
 
@@ -29,8 +31,22 @@ export function manageStagesSlides(isMobile, currentSlidesState) {
       text: stage.value,
     });
 
-    li.appendChild(img);
-    olElement.appendChild(li);
+    let container = null;
+    if (isMobile) {
+      container = createElement({
+        tag: 'div',
+        classes: ['stages__items-group', 'slider-slide'],
+      });
+    }
+
+    if (container) {
+      container.appendChild(li);
+      container.appendChild(img);
+      olElement.appendChild(container);
+    } else {
+      li.appendChild(img);
+      olElement.appendChild(li);
+    }
   });
 
   return isMobile;
