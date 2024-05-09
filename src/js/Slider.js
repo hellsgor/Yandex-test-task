@@ -23,6 +23,7 @@ class Slider {
       slidersParams[slider.getAttribute(`${sliderNameAttr}`)] || null;
 
     this.getElements();
+    this.setButtonsUnavailability();
   }
 
   /**
@@ -64,6 +65,15 @@ class Slider {
       `.${getSelector('slideClassName', 'slide')}`,
     );
   }
+
+  /**
+   * @description Устанавливает недоступность кнопок слайдера в зависимости от параметров.
+   */
+  setButtonsUnavailability() {
+    if (!this.params.loop) {
+      this.prewButton.setAttribute('disabled', true);
+    }
+  }
 }
 
 const sliderNameAttr = 'data-slider-name';
@@ -80,9 +90,12 @@ const slidersParams = {
    * paginationWrapperClassName - css-класс контейнера пагинации;
    * wrapperClassName - css-класс контейнера слайдов;
    * slideClassName - css-класс контейнера слайдов;
+   *
+   * loop - зацикленность слайдера
    * */
   stages: {
     wrapperClassName: 'stages__list',
+    loop: false,
   },
 };
 
