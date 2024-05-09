@@ -1,12 +1,10 @@
 import '@styles/index.scss';
-import ResolutionChecker from '@/js/helpers/ResolutionChecker.js';
+import { resolutionChecker } from '@/js/helpers/ResolutionChecker.js';
 import { manageStagesSlides } from '@/js/helpers/manageStagesSlides.js';
 import { store } from '@/store/store.js';
 
 let stagesSlidesMobileState = null;
 let groupedStagesIndexes = null;
-
-const resolutionChecker = new ResolutionChecker();
 
 const checkStagesSlides = () => {
   if (!groupedStagesIndexes) {

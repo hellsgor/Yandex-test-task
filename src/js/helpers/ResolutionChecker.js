@@ -1,4 +1,4 @@
-export default class ResolutionChecker {
+class ResolutionChecker {
   constructor() {
     this.tabletResolution = 1199;
     this.mobileResolution = 767;
@@ -48,3 +48,5 @@ export default class ResolutionChecker {
     }
   }
 }
+
+export const resolutionChecker = new ResolutionChecker();
