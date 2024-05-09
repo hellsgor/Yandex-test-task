@@ -35,7 +35,7 @@ export function createElement({
   }
 
   if (text) {
-    element.innerText = text;
+    element.innerHTML = text;
   }
 
   if (html) {

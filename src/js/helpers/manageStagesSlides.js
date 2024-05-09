@@ -1,65 +1,78 @@
 import { store } from '@/store/store.js';
 import { createElement } from '@/js/helpers/create-element.js';
 
-export function manageStagesSlides(isMobile, currentSlidesState) {
+/**
+ * Управляет слайдами этапов в зависимости от текущего состояния экрана.
+ * @param {boolean} isMobile - Флаг, указывающий, является ли текущее состояние экрана мобильным.
+ * @param {boolean} currentSlidesState - Текущее состояние слайдов.
+ * @param {Array<number>} groupedStagesIndexes - Массив индексов группированных этапов.
+ * @returns {boolean} - Новое состояние экрана.
+ */
+export function manageStagesSlides(
+  isMobile,
+  currentSlidesState,
+  groupedStagesIndexes,
+) {
   if (isMobile === currentSlidesState) {
     return isMobile;
   }
 
-  console.log('go');
-
-  const olElement = document.querySelector('.stages__list');
-  olElement.innerHTML = '';
-
-  store.stages.forEach((stage, idx) => {
-    const img = createElement({
-      tag: 'img',
-      classes: 'stages__item-overlay',
-      attributes: [
-        { name: 'alt', value: '' },
-        { name: 'src', value: '/images/stages/overlay.png' },
-      ],
-    });
-
-    const liClasses = stage.mod
-      ? ['stages__item', `stages__item_${stage.mod}`]
-      : ['stages__item'];
+  const createLi = (stage) => {
+    const liClasses =
+      stage.mod && !isMobile
+        ? ['stages__item', `stages__item_${stage.mod}`]
+        : ['stages__item'];
     !isMobile && liClasses.push('slider-slide');
-    const li = createElement({
+
+    return createElement({
       tag: 'li',
       classes: liClasses,
       text: stage.value,
     });
+  };
 
-    let container = null;
+  const ol = document.querySelector('.stages__list');
+  ol.innerHTML = '';
+
+  store.stages.forEach((stage, idx) => {
+    const li = createLi(stage);
+    const isGroupable = !!groupedStagesIndexes.find((index) => idx === index);
+
+    const img =
+      !isGroupable || !isMobile
+        ? createElement({
+            tag: 'img',
+            classes: 'stages__item-overlay',
+            attributes: [
+              { name: 'alt', value: '' },
+              { name: 'src', value: '/images/stages/overlay.png' },
+            ],
+          })
+        : null;
+
+    let container =
+      !isGroupable && isMobile
+        ? createElement({
+            tag: 'div',
+            classes: ['stages__items-group', 'slider-slide'],
+          })
+        : null;
+
     if (isMobile) {
-      container = createElement({
-        tag: 'div',
-        classes: ['stages__items-group', 'slider-slide'],
-      });
-    }
+      if (!container) {
+        container = Array.from(
+          ol.querySelectorAll('.stages__items-group'),
+        ).pop();
+      }
 
-    if (container) {
       container.appendChild(li);
-      container.appendChild(img);
-      olElement.appendChild(container);
+      img && container.appendChild(img);
     } else {
       li.appendChild(img);
-      olElement.appendChild(li);
     }
+
+    ol.appendChild(container || li);
   });
 
   return isMobile;
 }
-
-// <li className="stages__item{{#if this.mod}} stages__item_{{this.mod}}{{/if}}">
-//   {{{this.value}}}
-//   <img className="stages__item-overlay" alt="" src="/images/stages/overlay.png"/>
-// </li>
-
-// <div className="testLi">
-//   <li className="stages__item{{#if this.mod}} stages__item_{{this.mod}}{{/if}}">
-//     {{{this.value}}}
-//     <img className="stages__item-overlay" alt="" src="/images/stages/overlay.png"/>
-//   </li>
-// </div>
