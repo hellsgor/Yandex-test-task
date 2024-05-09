@@ -2,6 +2,7 @@ import '@styles/index.scss';
 import { resolutionChecker } from '@/js/helpers/ResolutionChecker.js';
 import { manageStagesSlides } from '@/js/helpers/manageStagesSlides.js';
 import { store } from '@/store/store.js';
+import { initSliders } from '@/js/Slider.js';
 
 let stagesSlidesMobileState = null;
 let groupedStagesIndexes = null;
@@ -22,6 +23,7 @@ const checkStagesSlides = () => {
 
 document.addEventListener('DOMContentLoaded', () => {
   checkStagesSlides();
+  initSliders();
 
   window.addEventListener('resize', () => {
     checkStagesSlides();
