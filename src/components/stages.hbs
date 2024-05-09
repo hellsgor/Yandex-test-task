@@ -5,21 +5,16 @@
       <a href="#" target="_blank" class="stages__to-source">Будущие источники обогащения васюкинцев</a>
     </div>
 
-    <ol class="stages__list">
-      {{#each stages}}
-        <li class="stages__item{{#if this.mod}} stages__item_{{this.mod}}{{/if}}">
-          {{{this.value}}}
-          <img class="stages__item-overlay" alt="" src="/images/stages/overlay.png">
-        </li>
-      {{/each}}
-    </ol>
+    <div class="stages__slider" data-slider-name="stages">
+      <ol class="stages__list"></ol>
 
-    {{> elements/image-element parent='stages' elemName='plain'}}
+      {{> elements/image-element parent='stages' elemName='plain'}}
 
-    <div class="stages__navigation">
-      {{> elements/slider-button prew=true classes='stages__slider-button stages__slider-button_prew'}}
-      <div class="slider-num-pagination stages__pagination"></div>
-      {{> elements/slider-button prew=false classes='stages__slider-button stages__slider-button_next'}}
+      <div class="stages__navigation">
+        {{> elements/slider-button prew=true classes='stages__slider-button stages__slider-button_prew'}}
+        <div class="slider-pagination slider-pagination_bulits stages__pagination"></div>
+        {{> elements/slider-button prew=false classes='stages__slider-button stages__slider-button_next'}}
+      </div>
     </div>
   </div>
 </div>

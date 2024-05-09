@@ -1,9 +1,16 @@
 @import '../global/colors';
 
-.slider-num-pagination {
+.slider-pagination {
   display: flex;
-  align-items: center;
-  column-gap: 6px;
+  
+  &_bulits {
+    align-items: center;
+    column-gap: 6px;
+  }
+  
+  &_nums {
+    align-items: baseline;
+  }
   
   &__bulit {
     display: block;
