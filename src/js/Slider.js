@@ -33,7 +33,7 @@ class Slider {
     this.getElements();
     this.createPagination();
     this.manageActivityClass('add');
-    this.setButtonsUnavailability();
+    this.setButtonsAvailability();
   }
 
   /**
@@ -79,12 +79,17 @@ class Slider {
   }
 
   /**
-   * @description Устанавливает недоступность кнопок слайдера в зависимости от параметров.
+   * Устанавливает доступность кнопок в зависимости от индекса активного слайда.
+   * @param {number|null} activeIdx - Индекс активного слайда. Если не указан, будет использован индекс активного слайда.
    */
-  setButtonsUnavailability() {
-    if (!this.params.loop) {
-      this.prewButton.setAttribute('disabled', true);
-    }
+  setButtonsAvailability(activeIdx = null) {
+    if (this.params.loop) return;
+
+    const idx = activeIdx || this.getActiveSlideIndex();
+    const maxIdx = this.slides.length - 1;
+
+    this.prewButton.disabled = idx === 0;
+    this.nextButton.disabled = maxIdx - idx === 0;
   }
 
   /**
