@@ -29,10 +29,11 @@ class Slider {
     this.params =
       slidersParams[slider.getAttribute(`${sliderNameAttr}`)] || null;
 
+    this.setBasicParams();
     this.getElements();
-    this.setButtonsUnavailability();
     this.createPagination();
     this.manageActivityClass('add');
+    this.setButtonsUnavailability();
   }
 
   /**
@@ -109,10 +110,6 @@ class Slider {
       );
     };
 
-    if (this.params.pagination !== false && !this.params.pagination) {
-      this.params.pagination = 'bulits';
-    }
-
     // Выбор типа пагинации
     switch (this.params.pagination) {
       case 'bulits':
@@ -177,6 +174,24 @@ class Slider {
       changeActiveClass(action, entityObj.entity, entityObj.className);
     });
   }
+
+  getActiveSlideIndex() {
+    return this.slides.findIndex((slide) =>
+      slide.className.contains(
+        `${this.classNames.slide}_${this.modifiers.active}`,
+      ),
+    );
+  }
+
+  setBasicParams() {
+    if (!this.params.loop) this.params.loop = false;
+
+    if (this.params.pagination !== false && !this.params.pagination) {
+      this.params.pagination = 'bulits';
+    }
+
+    if (!this.params.openingSlideIndex) this.params.openingSlideIndex = 0;
+  }
 }
 
 const sliderNameAttr = 'data-slider-name';
@@ -188,17 +203,19 @@ const slidersParams = {
    * ключом является имя слайдера
    *
    * элементы:
-   * prewButtonClassName - css-класс кнопки предыдущего слайда;
-   * nextButtonClassName - css-класс кнопки следующего слайда;
-   * paginationWrapperClassName - css-класс контейнера пагинации;
-   * wrapperClassName - css-класс контейнера слайдов;
-   * slideClassName - css-класс контейнера слайдов;
+   * prewButtonClassName - css-класс кнопки предыдущего слайда. Необязательный параметр, предусмотрено значение по умолчанию;
+   * nextButtonClassName - css-класс кнопки следующего слайда. Необязательный параметр, предусмотрено значение по умолчанию;
+   * paginationWrapperClassName - css-класс контейнера пагинации. Необязательный параметр, предусмотрено значение по умолчанию;
+   * wrapperClassName - css-класс контейнера слайдов. Необязательный параметр, предусмотрено значение по умолчанию;
+   * slideClassName - css-класс контейнера слайдов. Необязательный параметр, предусмотрено значение по умолчанию;
    *
-   * loop - зацикленность слайдера
+   * loop - зацикленность слайдера. Необязательный параметр. Значение по умолчанию - false.
    *
    * pagination - тип пагинации. Возможные значения: 'bulits' || 'nums' || true || false.
    * true - пагинация включена. Тип пагинации по умолчанию - 'bulits'.
    * false - пагинация отключена. Falsy-значения включат пагинацию с типом по умолчанию.
+   *
+   * openingSlide - начальный слайд, необязательный параметр. Значение по умолчанию - 0;
    * */
   stages: {
     wrapperClassName: 'stages__list',
