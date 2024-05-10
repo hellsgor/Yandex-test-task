@@ -13,6 +13,9 @@ class Slider {
     wrapper: `${this.defaultSliderClassName}-wrapper`,
     slide: `${this.defaultSliderClassName}-slide`,
   };
+  modifiers = {
+    active: 'active',
+  };
 
   prewButton = null;
   nextButton = null;
@@ -29,6 +32,7 @@ class Slider {
     this.getElements();
     this.setButtonsUnavailability();
     this.createPagination();
+    this.manageActivityClass('add');
   }
 
   /**
@@ -105,6 +109,10 @@ class Slider {
       );
     };
 
+    if (this.params.pagination !== false && !this.params.pagination) {
+      this.params.pagination = 'bulits';
+    }
+
     // Выбор типа пагинации
     switch (this.params.pagination) {
       case 'bulits':
@@ -112,9 +120,62 @@ class Slider {
         break;
 
       default:
-        setBulits();
         break;
     }
+  }
+
+  /**
+   * Управляет классом активности элементов.
+   * @param {string} action - Действие ('add' для добавления класса, 'remove' для удаления класса).
+   * @param {number|null} index - Индекс элемента (необязательный). Если не указан, будет определён автоматически.
+   */
+  manageActivityClass(action, index = null) {
+    /**
+     * Изменяет класс активности элемента.
+     * @param {string} action - Действие ('add' для добавления класса, 'remove' для удаления класса).
+     * @param {HTMLElement} entity - HTML-элемент.
+     * @param {string} className - Имя класса.
+     */
+    const changeActiveClass = (action, entity, className) => {
+      entity.classList[action](`${className}_${this.modifiers.active}`);
+    };
+
+    // Определение индекса элемента
+    const idx = index
+      ? index
+      : action === 'add'
+        ? 0
+        : this.slides.findIndex((slide) =>
+            slide.className.contains(
+              `${this.classNames.slide}_${this.modifiers.active}`,
+            ),
+          );
+
+    /**
+     * Возвращает массив активных элементов.
+     * @returns {Array} - Массив объектов, содержащих активные элементы и их классы.
+     */
+    const getActiveElementsArray = () => {
+      const activeElementsArray = [
+        {
+          entity: this.slides[idx],
+          className: this.classNames.slide,
+        },
+      ];
+
+      if (this.params?.pagination === 'bulits') {
+        activeElementsArray.push({
+          entity: this.bulits[idx],
+          className: this.classNames.paginationBulit,
+        });
+      }
+
+      return activeElementsArray;
+    };
+
+    getActiveElementsArray().forEach((entityObj) => {
+      changeActiveClass(action, entityObj.entity, entityObj.className);
+    });
   }
 }
 
@@ -137,12 +198,11 @@ const slidersParams = {
    *
    * pagination - тип пагинации. Возможные значения: 'bulits' || 'nums' || true || false.
    * true - пагинация включена. Тип пагинации по умолчанию - 'bulits'.
-   * false (или falsy-значение) - пагинация отключена.
+   * false - пагинация отключена. Falsy-значения включат пагинацию с типом по умолчанию.
    * */
   stages: {
     wrapperClassName: 'stages__list',
     loop: false,
-    pagination: 'bulits',
   },
 };
 
