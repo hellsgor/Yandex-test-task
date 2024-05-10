@@ -71,8 +71,10 @@ class Slider {
       'paginationWrapper',
     );
     this.wrapper = getElement('wrapperClassName', 'wrapper');
-    this.slides = this.sliderElem.querySelectorAll(
-      `.${getSelector('slideClassName', 'slide')}`,
+    this.slides = Array.from(
+      this.sliderElem.querySelectorAll(
+        `.${getSelector('slideClassName', 'slide')}`,
+      ),
     );
   }
 
