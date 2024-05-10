@@ -11,6 +11,8 @@ class Slider {
   slides = null;
   bulits = null;
 
+  columnGap = null;
+
   defaultSliderClassName = 'slider';
   classNames = {
     default: {
@@ -38,6 +40,8 @@ class Slider {
     this.createPagination();
     this.manageActivityClass('add');
     this.setButtonsAvailability();
+
+    this.addEvents();
   }
 
   /**
@@ -182,6 +186,15 @@ class Slider {
     }
 
     if (!this.params.openingSlideIndex) this.params.openingSlideIndex = 0;
+
+    this.params.slidesPerView = this.params.slidesPerView || {};
+    this.params.slidesPerView.desktop = this.params.slidesPerView.desktop || 1;
+    this.params.slidesPerView.tablet = this.params.slidesPerView.tablet || 1;
+    this.params.slidesPerView.mobile = this.params.slidesPerView.mobile || 1;
+
+    if (!this.params.transition) {
+      this.params.transition = 300;
+    }
   }
 
   /**
@@ -191,6 +204,116 @@ class Slider {
     Object.keys(this.classNames.default).forEach((key) => {
       this.params[key] && (this.classNames.default[key] = this.params[key]);
     });
+  }
+
+  /**
+   * Добавляет слушателей событий для кнопок переключения и изменения размера окна.
+   */
+  addEvents() {
+    this.nextClickHandler = (event) => {
+      this.switchSlide('next', event);
+    };
+    this.prewClickHandler = (event) => {
+      this.switchSlide('prew', event);
+    };
+    this.resizeHandler = () => {
+      this.getColumnGap();
+    };
+
+    this.nextButton.addEventListener('click', this.nextClickHandler);
+    this.prewButton.addEventListener('click', this.prewClickHandler);
+    window.addEventListener('resize', this.resizeHandler);
+  }
+
+  /**
+   * Удаляет слушателей событий, ранее добавленных методом addEvents().
+   */
+  removeEvents() {
+    this.nextButton.removeEventListener('click', this.nextClickHandler);
+    this.prewButton.removeEventListener('click', this.prewClickHandler);
+    window.removeEventListener('resize', this.resizeHandler);
+  }
+
+  switchSlide(direction, event) {
+    this.disableSliderButton(event);
+
+    this.setTransition();
+    this.wrapper.style.transform = `translateX(${this.getTranslate(direction)}px)`;
+
+    const activeIndex = this.getActiveSlideIndex();
+    const newActiveIndex =
+      direction === 'next' ? activeIndex + 1 : activeIndex - 1;
+    this.manageActivityClass('remove', activeIndex);
+    this.manageActivityClass('add', newActiveIndex);
+    this.setButtonsAvailability(newActiveIndex);
+  }
+
+  /**
+   * Получает значение пространства между колонками (column-gap) элемента-обертки слайдов.
+   * @returns {number} - Значение пространства между колонками в пикселях. Если значение не найдено или равно 'normal', возвращается 0.
+   */
+  getColumnGap() {
+    const columnGapValue = window
+      .getComputedStyle(this.wrapper)
+      .getPropertyValue('column-gap');
+
+    let columnGap = 0;
+
+    if (columnGapValue && columnGapValue !== 'normal') {
+      const matchedValue = columnGapValue.match(/\d+/);
+      if (matchedValue && matchedValue.length > 0) {
+        columnGap = parseInt(matchedValue[0], 10);
+      }
+    }
+
+    this.columnGap = columnGap;
+    return columnGap;
+  }
+
+  /**
+   * Вычисляет значение смещения (translate) для прокрутки следующего или предыдущего слайда.
+   * @param {string} direction - Направление прокрутки: 'next' для следующего, 'prew' для предыдущего.
+   * @returns {number} - Значение смещения для прокрутки слайдов.
+   */
+  getTranslate(direction) {
+    // Рассчитываем значение смещения на основе ширины активного слайда и промежутка между колонками
+    const translateValue =
+      this.slides[this.getActiveSlideIndex()].offsetWidth +
+      (this.columnGap || this.getColumnGap());
+
+    // Получаем текущее значение смещения по X из стиля wrapper
+    const currentTranslateX = parseInt(
+      this.wrapper.style.transform.match(/translateX\(([-+]?\d+)px\)/)?.[1] ||
+        0,
+      10,
+    );
+
+    // Возвращаем значение смещения в зависимости от направления
+    return direction === 'next'
+      ? currentTranslateX - translateValue
+      : currentTranslateX + translateValue;
+  }
+
+  /**
+   * Устанавливает длительность и кривую промежуточных точек прокрутки слайдов.
+   */
+  setTransition() {
+    this.wrapper.style.transition = `transform ${this.params.transition / 1000}s ease-in-out`;
+
+    setTimeout(() => {
+      this.wrapper.style.transition = '';
+    }, this.params.transition + 5);
+  }
+
+  /**
+   * Отключает события мыши для кнопки слайдера на заданное время.
+   * @param {MouseEvent} event - Событие, которое вызвало метод.
+   */
+  disableSliderButton({ target }) {
+    target.style.pointerEvents = 'none';
+    setTimeout(() => {
+      target.style.pointerEvents = '';
+    }, this.params.transition + 100);
   }
 }
 
@@ -214,7 +337,14 @@ const slidersParams = {
    * true - пагинация включена. Тип пагинации по умолчанию - 'bulits'.
    * false - пагинация отключена. Falsy-значения включат пагинацию с типом по умолчанию.
    *
-   * openingSlide - начальный слайд, необязательный параметр. Значение по умолчанию - 0;
+   * openingSlide - начальный слайд, необязательный параметр.
+   * Значение по умолчанию - 0;
+   *
+   * slidesPerView - количество одновременно видимых слайдов для отдельных брэйкпоинтов (desktop, tablet, mobile).
+   * Значение по умолчанию - 1
+   *
+   * transition - время, в миллисекундах, за которое слайды должны переключиться.
+   * Значение по умолчанию - 300ms
    * */
   stages: {
     wrapper: 'stages__list',

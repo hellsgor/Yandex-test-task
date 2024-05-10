@@ -190,15 +190,20 @@
       margin-left: 0;
     }
     
+    &__slider {
+      overflow: hidden;
+    }
+    
     &__list {
+      top: 0;
+      left: 0;
       display: flex;
-      overflow-x: scroll;
       width: 100%;
       height: 300px;
       margin-bottom: 28px;
       flex-direction: column;
       flex-wrap: wrap;
-      column-gap: 20px;
+      column-gap: unset;
       row-gap: 0;
     }
     
