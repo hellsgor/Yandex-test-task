@@ -41,7 +41,7 @@ class Slider {
   }
 
   /**
-   * @description Получает элементы слайдера по заданным классам.
+   * Получает элементы слайдера по заданным классам.
    */
   getElements() {
     const getElement = (className) => {
@@ -74,11 +74,11 @@ class Slider {
   }
 
   /**
-   * @description Устанавливает пагинацию для слайдера в зависимости от параметров.
+   * Устанавливает пагинацию для слайдера в зависимости от параметров.
    */
   createPagination() {
     /**
-     * @description Создает элементы пагинации в виде точек.
+     * Создает элементы пагинации в виде точек.
      */
     const setBulits = () => {
       this.paginationWrapper.classList.add(
@@ -159,6 +159,10 @@ class Slider {
     });
   }
 
+  /**
+   * Возвращает индекс активного слайда.
+   * @returns {number} Возвращает индекс активного слайда или -1, если активный слайд не найден.
+   */
   getActiveSlideIndex() {
     return this.slides.findIndex((slide) =>
       slide.classList.contains(
@@ -167,6 +171,9 @@ class Slider {
     );
   }
 
+  /**
+   * Устанавливает базовым параметры слайдера значения по умолчанию.
+   */
   setBasicParams() {
     if (!this.params.loop) this.params.loop = false;
 
@@ -177,6 +184,9 @@ class Slider {
     if (!this.params.openingSlideIndex) this.params.openingSlideIndex = 0;
   }
 
+  /**
+   * Проверяет пользовательские классы и применяет их, если они установлены в параметрах.
+   */
   checkCustomClassNames() {
     Object.keys(this.classNames.default).forEach((key) => {
       this.params[key] && (this.classNames.default[key] = this.params[key]);
