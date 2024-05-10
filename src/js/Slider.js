@@ -4,19 +4,6 @@ class Slider {
   sliderElem = null;
   params = null;
 
-  defaultSliderClassName = 'slider';
-  classNames = {
-    prewButton: `${this.defaultSliderClassName}-button_prew`,
-    nextButton: `${this.defaultSliderClassName}-button_next`,
-    paginationWrapper: `${this.defaultSliderClassName}-pagination`,
-    paginationBulit: `${this.defaultSliderClassName}-pagination__bulit`,
-    wrapper: `${this.defaultSliderClassName}-wrapper`,
-    slide: `${this.defaultSliderClassName}-slide`,
-  };
-  modifiers = {
-    active: 'active',
-  };
-
   prewButton = null;
   nextButton = null;
   paginationWrapper = null;
@@ -24,12 +11,29 @@ class Slider {
   slides = null;
   bulits = null;
 
+  defaultSliderClassName = 'slider';
+  classNames = {
+    default: {
+      prewButton: `${this.defaultSliderClassName}-button_prew`,
+      nextButton: `${this.defaultSliderClassName}-button_next`,
+      paginationWrapper: `${this.defaultSliderClassName}-pagination`,
+      wrapper: `${this.defaultSliderClassName}-wrapper`,
+      slide: `${this.defaultSliderClassName}-slide`,
+    },
+    paginationBulit: `${this.defaultSliderClassName}-pagination__bulit`,
+  };
+  modifiers = {
+    active: 'active',
+  };
+
   constructor(slider) {
     this.sliderElem = slider || null;
     this.params =
       slidersParams[slider.getAttribute(`${sliderNameAttr}`)] || null;
 
     this.setBasicParams();
+    this.checkCustomClassNames();
+
     this.getElements();
     this.createPagination();
     this.manageActivityClass('add');
@@ -40,41 +44,18 @@ class Slider {
    * @description Получает элементы слайдера по заданным классам.
    */
   getElements() {
-    /**
-     * @description Возвращает класс элемента слайдера в зависимости от наличия пользовательского параметра. Если пользовательский параметр не указан, возвращает класс по умолчанию.
-     * @param {string} customParamName - Название пользовательского параметра.
-     * @param {string} defaultClassnameKey - Ключ класса по умолчанию.
-     * @returns {string} - Класс элемента слайдера.
-     */
-    const getSelector = (customParamName, defaultClassnameKey) => {
-      return this.params[customParamName]
-        ? this.params[customParamName]
-        : this.classNames[defaultClassnameKey];
+    const getElement = (className) => {
+      return this.sliderElem.querySelector(`.${className}`);
     };
 
-    /**
-     * @description Получает элемент слайдера по заданному классу.
-     * @param {string} customParamName - Название пользовательского параметра.
-     * @param {string} defaultClassnameKey - Ключ класса по умолчанию.
-     * @returns {HTMLElement} - Элемент слайдера.
-     */
-    const getElement = (customParamName, defaultClassnameKey) => {
-      return this.sliderElem.querySelector(
-        `.${getSelector(customParamName, defaultClassnameKey)}`,
-      );
-    };
-
-    this.prewButton = getElement('prewButtonClassName', 'prewButton');
-    this.nextButton = getElement('nextButtonClassName', 'nextButton');
+    this.prewButton = getElement(this.classNames.default.prewButton);
+    this.nextButton = getElement(this.classNames.default.nextButton);
     this.paginationWrapper = getElement(
-      'paginationWrapperClassName',
-      'paginationWrapper',
+      this.classNames.default.paginationWrapper,
     );
-    this.wrapper = getElement('wrapperClassName', 'wrapper');
+    this.wrapper = getElement(this.classNames.default.wrapper);
     this.slides = Array.from(
-      this.sliderElem.querySelectorAll(
-        `.${getSelector('slideClassName', 'slide')}`,
-      ),
+      this.sliderElem.querySelectorAll(`.${this.classNames.default.slide}`),
     );
   }
 
@@ -101,7 +82,7 @@ class Slider {
      */
     const setBulits = () => {
       this.paginationWrapper.classList.add(
-        `${this.classNames.paginationWrapper}_bulits`,
+        `${this.classNames.default.paginationWrapper}_bulits`,
       );
       for (let i = 0; i < this.slides.length; i++) {
         this.paginationWrapper.appendChild(
@@ -159,7 +140,7 @@ class Slider {
       const activeElementsArray = [
         {
           entity: this.slides[idx],
-          className: this.classNames.slide,
+          className: this.classNames.default.slide,
         },
       ];
 
@@ -181,7 +162,7 @@ class Slider {
   getActiveSlideIndex() {
     return this.slides.findIndex((slide) =>
       slide.classList.contains(
-        `${this.classNames.slide}_${this.modifiers.active}`,
+        `${this.classNames.default.slide}_${this.modifiers.active}`,
       ),
     );
   }
@@ -195,6 +176,12 @@ class Slider {
 
     if (!this.params.openingSlideIndex) this.params.openingSlideIndex = 0;
   }
+
+  checkCustomClassNames() {
+    Object.keys(this.classNames.default).forEach((key) => {
+      this.params[key] && (this.classNames.default[key] = this.params[key]);
+    });
+  }
 }
 
 const sliderNameAttr = 'data-slider-name';
@@ -205,12 +192,11 @@ const slidersParams = {
    *
    * ключом является имя слайдера
    *
-   * элементы:
-   * prewButtonClassName - css-класс кнопки предыдущего слайда. Необязательный параметр, предусмотрено значение по умолчанию;
-   * nextButtonClassName - css-класс кнопки следующего слайда. Необязательный параметр, предусмотрено значение по умолчанию;
-   * paginationWrapperClassName - css-класс контейнера пагинации. Необязательный параметр, предусмотрено значение по умолчанию;
-   * wrapperClassName - css-класс контейнера слайдов. Необязательный параметр, предусмотрено значение по умолчанию;
-   * slideClassName - css-класс контейнера слайдов. Необязательный параметр, предусмотрено значение по умолчанию;
+   * prewButton- css-класс кнопки предыдущего слайда. Необязательный параметр, предусмотрено значение по умолчанию;
+   * nextButton - css-класс кнопки следующего слайда. Необязательный параметр, предусмотрено значение по умолчанию;
+   * paginationWrapper - css-класс контейнера пагинации. Необязательный параметр, предусмотрено значение по умолчанию;
+   * wrapper - css-класс контейнера слайдов. Необязательный параметр, предусмотрено значение по умолчанию;
+   * slide - css-класс контейнера слайдов. Необязательный параметр, предусмотрено значение по умолчанию;
    *
    * loop - зацикленность слайдера. Необязательный параметр. Значение по умолчанию - false.
    *
@@ -221,7 +207,7 @@ const slidersParams = {
    * openingSlide - начальный слайд, необязательный параметр. Значение по умолчанию - 0;
    * */
   stages: {
-    wrapperClassName: 'stages__list',
+    wrapper: 'stages__list',
     loop: false,
   },
 };
