@@ -179,7 +179,7 @@ class Slider {
 
   getActiveSlideIndex() {
     return this.slides.findIndex((slide) =>
-      slide.className.contains(
+      slide.classList.contains(
         `${this.classNames.slide}_${this.modifiers.active}`,
       ),
     );
