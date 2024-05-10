@@ -143,12 +143,8 @@ class Slider {
     const idx = index
       ? index
       : action === 'add'
-        ? 0
-        : this.slides.findIndex((slide) =>
-            slide.className.contains(
-              `${this.classNames.slide}_${this.modifiers.active}`,
-            ),
-          );
+        ? this.params.openingSlideIndex
+        : this.getActiveSlideIndex();
 
     /**
      * Возвращает массив активных элементов.
