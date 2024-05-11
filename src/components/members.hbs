@@ -1,10 +1,10 @@
 <div class="members section">
   <div class="members__wrapper section__container">
     <h3 class="members__heading heading heading_3">Участники турнира</h3>
-    <div class="members__slider">
+    <div class="members__slider" data-slider-name="members">
       <div class="members__inner slider-wrapper">
         {{#each this.members}}
-          {{> member this classes='members__item'}}
+          {{> member this classes='members__item slider-slide'}}
         {{/each}}
       </div>
       <div class="members__navigation">
