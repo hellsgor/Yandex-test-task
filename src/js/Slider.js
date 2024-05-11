@@ -213,9 +213,11 @@ class Slider {
     this.nextClickHandler = (event) => {
       this.switchSlide('next', event);
     };
+
     this.prewClickHandler = (event) => {
       this.switchSlide('prew', event);
     };
+
     this.resizeHandler = () => {
       this.getColumnGap();
       this.wrapper.style.transform = 'translateX(0px)';
@@ -227,9 +229,11 @@ class Slider {
       this.setButtonsAvailability(0);
     };
 
+    this.debouncedResizeHendler = this.resizeDebounce(this.resizeHandler, 300);
+
     this.nextButton.addEventListener('click', this.nextClickHandler);
     this.prewButton.addEventListener('click', this.prewClickHandler);
-    window.addEventListener('resize', this.resizeHandler);
+    window.addEventListener('resize', this.debouncedResizeHendler);
   }
 
   /**
@@ -375,6 +379,20 @@ class Slider {
     this.slides = null;
     this.bulits = null;
     this.columnGap = null;
+  }
+
+  resizeDebounce(callee, timeoutMs) {
+    return function perform(...args) {
+      let previousCall = this.lastCall;
+
+      this.lastCall = Date.now();
+
+      if (previousCall && this.lastCall - previousCall <= timeoutMs) {
+        clearTimeout(this.lastCallTimer);
+      }
+
+      this.lastCallTimer = setTimeout(() => callee(...args), timeoutMs);
+    };
   }
 }
 
