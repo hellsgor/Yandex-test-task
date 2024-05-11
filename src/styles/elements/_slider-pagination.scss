@@ -10,6 +10,14 @@
   
   &_nums {
     align-items: baseline;
+    column-gap: 3px;
+    font-size: 16px;
+    
+    span {
+      &:not(:nth-child(1)) {
+        opacity: .6;
+      }
+    }
   }
   
   &__bulit {

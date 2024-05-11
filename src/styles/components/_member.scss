@@ -4,7 +4,7 @@
 
 .member {
   display: flex;
-  max-width: 394px;
+  flex: 0 0 394px;
   flex-direction: column;
   align-items: center;
   
@@ -23,20 +23,39 @@
     margin-bottom: 6px;
     font-size: 24px;
     font-weight: 600;
+    text-align: center;
   }
   
   &__rank {
     opacity: .6;
     margin-bottom: 20px;
+    text-align: center;
   }
   
-  @include max-media(640px) {
-    max-width: unset;
+  @include max-media(1240px) {
+    flex-basis: 320px;
+    
+    &__photo {
+      width: 280px;
+      flex-basis: 280px;
+    }
+  }
+  
+  @include max-media(1024px) {
+    flex-basis: 404px;
+  }
+  
+  @include max-media(880px) {
+    flex-basis: 310px;
     
     &__photo {
       width: 244px;
       flex-basis: 244px;
     }
+  }
+  
+  @include max-media(640px) {
+    flex-basis: 100%;
     
     &__name {
       margin-bottom: 8px;
