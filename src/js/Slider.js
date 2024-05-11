@@ -218,6 +218,13 @@ class Slider {
     };
     this.resizeHandler = () => {
       this.getColumnGap();
+      this.wrapper.style.transform = 'translateX(0px)';
+      this.manageActivityClass('remove', this.getActiveSlideIndex());
+      this.slides = Array.from(
+        this.sliderElem.querySelectorAll(`.${this.classNames.default.slide}`),
+      );
+      this.manageActivityClass('add', 0);
+      this.setButtonsAvailability(0);
     };
 
     this.nextButton.addEventListener('click', this.nextClickHandler);
@@ -226,13 +233,10 @@ class Slider {
   }
 
   /**
-   * Удаляет слушателей событий, ранее добавленных методом addEvents().
+   * Переключает слайд в слайдере в зависимости от заданного направления.
+   * @param {string} direction - Направление, в котором необходимо переключить слайд ('next' или 'prev').
+   * @param {Event} event - Событие, которое вызвало переключение слайдов.
    */
-  removeEvents() {
-    this.nextButton.removeEventListener('click', this.nextClickHandler);
-    this.prewButton.removeEventListener('click', this.prewClickHandler);
-    window.removeEventListener('resize', this.resizeHandler);
-  }
 
   switchSlide(direction, event) {
     this.disableSliderButton(event);

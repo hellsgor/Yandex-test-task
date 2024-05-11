@@ -203,7 +203,6 @@
       margin-bottom: 28px;
       flex-direction: column;
       flex-wrap: wrap;
-      column-gap: unset;
       row-gap: 0;
     }
     
@@ -294,7 +293,6 @@
     }
     
     &__list {
-      overflow-x: scroll;
       height: 340px;
     }
     
