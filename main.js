@@ -6,7 +6,6 @@ import { initSliders } from '@/js/Slider.js';
 
 let stagesSlidesMobileState = null;
 let groupedStagesIndexes = null;
-let sliders = null;
 
 const checkStagesSlides = () => {
   if (!groupedStagesIndexes) {
@@ -16,7 +15,7 @@ const checkStagesSlides = () => {
   }
 
   stagesSlidesMobileState = manageStagesSlides(
-    resolutionChecker.isCustom(640),
+    resolutionChecker.isMobile(),
     stagesSlidesMobileState,
     groupedStagesIndexes,
   );
