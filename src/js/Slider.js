@@ -1,4 +1,5 @@
 import { createElement } from '@/js/helpers/create-element.js';
+import { resolutionChecker } from '@/js/helpers/ResolutionChecker.js';
 
 class Slider {
   sliderElem = null;
@@ -404,6 +405,16 @@ class Slider {
 
       this.lastCallTimer = setTimeout(() => callee(...args), timeoutMs);
     };
+  }
+
+  /**
+   * Определяет количество слайдов для отображения в зависимости от текущего разрешения экрана.
+   * @returns {number} Количество слайдов для отображения на экране.
+   */
+  getSlidesPerView() {
+    if (resolutionChecker.isMobile()) return this.params.slidesPerView.mobile;
+    if (resolutionChecker.isTablet()) return this.params.slidesPerView.tablet;
+    return this.params.slidesPerView.desktop;
   }
 }
 
