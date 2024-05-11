@@ -1,0 +1,31 @@
+.default-member-image {
+  position: relative;
+  display: flex;
+  padding-top: 6.6%;
+  justify-content: center;
+  
+  &__item {
+    position: relative;
+    z-index: 2;
+    display: block;
+    width: 92%;
+    height: auto;
+  }
+  
+  &::before {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: block;
+    opacity: .8;
+    width: 118%;
+    height: 244%;
+    box-shadow: 5px 4px 12.7px 0 rgba(0, 0, 0, 0.25);
+    background: url('/images/textures/paper.png') no-repeat center;
+    background-size: contain;
+    content: '';
+    transform: translate(-50%, -50%) rotate(-90deg);
+    transform-origin: center;
+  }
+  
+}

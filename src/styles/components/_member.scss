@@ -1,0 +1,45 @@
+@import '../global/colors';
+@import '../global/mixins/media';
+@import "../elements/default-member-image";
+
+.member {
+  display: flex;
+  max-width: 394px;
+  flex-direction: column;
+  align-items: center;
+  
+  &__photo {
+    overflow: hidden;
+    width: 320px;
+    border-radius: 100%;
+    margin-bottom: 28px;
+    flex: 0 1 320px;
+    background-color: $member-photo-background;
+    object-fit: cover;
+    object-position: center;
+  }
+  
+  &__name {
+    margin-bottom: 6px;
+    font-size: 24px;
+    font-weight: 600;
+  }
+  
+  &__rank {
+    opacity: .6;
+    margin-bottom: 20px;
+  }
+  
+  @include max-media(640px) {
+    max-width: unset;
+    
+    &__photo {
+      width: 244px;
+      flex-basis: 244px;
+    }
+    
+    &__name {
+      margin-bottom: 8px;
+    }
+  }
+}

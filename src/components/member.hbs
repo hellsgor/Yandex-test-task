@@ -1,12 +1,15 @@
 <div class="member{{#if classes}} {{classes}}{{/if}}">
-  <div class="member__photo">
-    {{#if this.photo}}
-      <img src="{{this.photo}}" alt="Фото - {{this.name}}">
-    {{else}}
+
+  {{#if this.photo}}
+    <img src="{{this.photo}}" alt="Фото - {{this.name}}" class="member__photo">
+  {{else}}
+    <div class="member__photo">
       {{> elements/default-member-image}}
-    {{/if}}
-  </div>
+    </div>
+  {{/if}}
+
   <p class="member__name">{{{this.name}}}</p>
   <p class="member__rank">{{{this.rank}}}</p>
+
   {{> elements/button hrefAttr=this.url text='Подробнее' classes='button_small member__about-button'}}
 </div>
