@@ -249,7 +249,6 @@ class Slider {
 
     this.nextButton.addEventListener('click', this.nextClickHandler);
     this.prewButton.addEventListener('click', this.prewClickHandler);
-    window.addEventListener('resize', this.debouncedResizeHendler);
   }
 
   /**
@@ -398,7 +397,7 @@ class Slider {
   }
 
   /**
-   * Функция debounce для отложенного выполнения переданной функции.
+   * Откладывает выполнения переданной функции.
    * @param {Function} callee - Функция, которую нужно отложенно выполнить.
    * @param {number} timeoutMs - Время задержки (в миллисекундах) перед выполнением функции.
    * @returns {Function} - Функция обертка, которая реализует механизм отложенного выполнения.
@@ -471,7 +470,7 @@ const slidersParams = {
 };
 
 export function initSliders() {
-  document
-    .querySelectorAll(`[${sliderNameAttr}]`)
-    .forEach((slider) => new Slider(slider));
+  return Array.from(document.querySelectorAll(`[${sliderNameAttr}]`)).map(
+    (slider) => new Slider(slider),
+  );
 }
