@@ -301,8 +301,9 @@ class Slider {
   getTranslate(direction) {
     // Рассчитываем значение смещения на основе ширины активного слайда и промежутка между колонками
     const translateValue =
-      this.slides[this.getActiveSlideIndex()].offsetWidth +
-      (this.columnGap || this.getColumnGap());
+      (this.slides[this.getActiveSlideIndex()].offsetWidth +
+        (this.columnGap || this.getColumnGap())) *
+      this.getSlidesPerView();
 
     // Получаем текущее значение смещения по X из стиля wrapper
     const currentTranslateX = parseInt(
@@ -455,7 +456,14 @@ const slidersParams = {
    * */
   stages: {
     wrapper: 'stages__list',
-    loop: false,
+  },
+
+  members: {
+    slidesPerView: {
+      desktop: 3,
+      tablet: 2,
+      mobile: 1,
+    },
   },
 };
 
