@@ -393,6 +393,12 @@ class Slider {
     });
   }
 
+  /**
+   * Функция debounce для отложенного выполнения переданной функции.
+   * @param {Function} callee - Функция, которую нужно отложенно выполнить.
+   * @param {number} timeoutMs - Время задержки (в миллисекундах) перед выполнением функции.
+   * @returns {Function} - Функция обертка, которая реализует механизм отложенного выполнения.
+   */
   resizeDebounce(callee, timeoutMs) {
     return function perform(...args) {
       let previousCall = this.lastCall;
