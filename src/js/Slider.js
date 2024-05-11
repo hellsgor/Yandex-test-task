@@ -87,7 +87,8 @@ class Slider {
     const maxIdx = this.slides.length - 1;
 
     this.prewButton.disabled = idx === 0;
-    this.nextButton.disabled = maxIdx - idx === 0;
+    this.nextButton.disabled =
+      maxIdx === idx || idx + this.getSlidesPerView() - 1 === maxIdx;
   }
 
   /**
@@ -240,7 +241,7 @@ class Slider {
       this.slides = Array.from(
         this.sliderElem.querySelectorAll(`.${this.classNames.default.slide}`),
       );
-      this.manageActivityClass('add', 0);
+      this.manageActivityClass('add');
       this.setButtonsAvailability(0);
     };
 
@@ -265,7 +266,9 @@ class Slider {
 
     const activeIndex = this.getActiveSlideIndex();
     const newActiveIndex =
-      direction === 'next' ? activeIndex + 1 : activeIndex - 1;
+      direction === 'next'
+        ? activeIndex + this.getSlidesPerView()
+        : activeIndex - this.getSlidesPerView();
     this.manageActivityClass('remove', activeIndex);
     this.manageActivityClass('add', newActiveIndex);
     this.setButtonsAvailability(newActiveIndex);
@@ -337,7 +340,7 @@ class Slider {
     target.style.pointerEvents = 'none';
     setTimeout(() => {
       target.style.pointerEvents = '';
-    }, this.params.transition + 100);
+    }, this.params.transition + 1);
   }
 
   /**
