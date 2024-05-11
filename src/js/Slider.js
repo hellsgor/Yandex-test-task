@@ -384,15 +384,12 @@ class Slider {
    * Очищает свойства.
    */
   clearProperties() {
-    this.sliderElem = null;
-    this.params = null;
-    this.prewButton = null;
-    this.nextButton = null;
-    this.paginationWrapper = null;
-    this.wrapper = null;
-    this.slides = null;
-    this.bulits = null;
-    this.columnGap = null;
+    Object.keys(this).forEach((key) => {
+      const value = this[key];
+      if (value !== null && typeof value !== 'function') {
+        this[key] = null;
+      }
+    });
   }
 
   resizeDebounce(callee, timeoutMs) {
