@@ -11,8 +11,6 @@ class Slider {
   slides = null;
   bulits = null;
 
-  columnGap = null;
-
   defaultSliderClassName = 'slider';
   classNames = {
     default: {
@@ -28,12 +26,26 @@ class Slider {
     active: 'active',
   };
 
+  columnGap = null;
+
+  defaultParams = {
+    loop: false,
+    pagination: 'bulits',
+    openingSlideIndex: 0,
+    slidesPerView: {
+      desktop: 1,
+      tablet: 1,
+      mobile: 1,
+    },
+    transition: 300,
+  };
+
   constructor(slider) {
     this.sliderElem = slider || null;
     this.params =
       slidersParams[slider.getAttribute(`${sliderNameAttr}`)] || null;
 
-    this.setBasicParams();
+    this.setDefaultParams();
     this.checkCustomClassNames();
 
     this.getElements();
@@ -178,23 +190,25 @@ class Slider {
   /**
    * Устанавливает базовым параметры слайдера значения по умолчанию.
    */
-  setBasicParams() {
-    if (!this.params.loop) this.params.loop = false;
-
-    if (this.params.pagination !== false && !this.params.pagination) {
-      this.params.pagination = 'bulits';
+  setDefaultParams() {
+    if (!this.params) {
+      this.params = this.defaultParams;
+      return;
     }
 
-    if (!this.params.openingSlideIndex) this.params.openingSlideIndex = 0;
+    if (this.params.pagination !== false && !this.params.pagination) {
+      this.params.pagination = this.defaultParams.pagination;
+    }
 
+    this.params.loop = this.params.loop || this.defaultParams.loop;
+    this.params.openingSlideIndex =
+      this.params.openingSlideIndex || this.defaultParams.openingSlideIndex;
+    this.params.transition =
+      this.params.transition || this.defaultParams.transition;
     this.params.slidesPerView = this.params.slidesPerView || {};
     this.params.slidesPerView.desktop = this.params.slidesPerView.desktop || 1;
     this.params.slidesPerView.tablet = this.params.slidesPerView.tablet || 1;
     this.params.slidesPerView.mobile = this.params.slidesPerView.mobile || 1;
-
-    if (!this.params.transition) {
-      this.params.transition = 300;
-    }
   }
 
   /**
