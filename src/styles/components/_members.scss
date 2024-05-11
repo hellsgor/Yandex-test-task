@@ -4,23 +4,26 @@
 .members {
   margin-bottom: 141px;
   
+  &__wrapper {
+    position: relative;
+  }
+  
   &__heading {
     margin-bottom: 60px;
   }
   
   &__slider {
-    position: relative;
+    overflow: hidden;
   }
   
   &__inner {
     display: flex;
-    overflow: hidden;
     column-gap: 20px;
   }
   
   &__navigation {
     position: absolute;
-    top: -115px;
+    top: 10px;
     right: 0;
     display: flex;
     align-items: center;
@@ -38,7 +41,7 @@
     }
     
     &__navigation {
-      top: -144px;
+      top: 42px;
     }
   }
   
