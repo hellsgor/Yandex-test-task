@@ -319,6 +319,63 @@ class Slider {
       target.style.pointerEvents = '';
     }, this.params.transition + 100);
   }
+
+  /**
+   * Уничтожает слайдер, удаляя все обработчики событий и возвращая исходное состояние элементов.
+   */
+  destroy() {
+    this.removeEvents();
+    this.resetButtonsAvailability();
+    this.resetPagination();
+    this.clearProperties();
+  }
+
+  /**
+   * Удаляет все обработчики событий, добавленные к слайдеру.
+   */
+  removeEvents() {
+    this.prewButton.removeEventListener('click', this.prewClickHandler);
+    this.prewClickHandler = null;
+
+    this.nextButton.removeEventListener('click', this.nextClickHandler);
+    this.nextClickHandler = null;
+
+    window.removeEventListener('resize', this.resizeHandler);
+    this.resizeHandler = null;
+  }
+
+  /**
+   * Сбрасывает доступность кнопок слайдера.
+   */
+  resetButtonsAvailability() {
+    this.prewButton.disabled = false;
+    this.nextButton.disabled = false;
+  }
+
+  /**
+   * Удаляет пагинацию из слайдера.
+   */
+  resetPagination() {
+    this.paginationWrapper.innerHTML = '';
+    this.paginationWrapper.classList.remove(
+      `${this.classNames.default.paginationWrapper}_bulits`,
+    );
+  }
+
+  /**
+   * Очищает свойства.
+   */
+  clearProperties() {
+    this.sliderElem = null;
+    this.params = null;
+    this.prewButton = null;
+    this.nextButton = null;
+    this.paginationWrapper = null;
+    this.wrapper = null;
+    this.slides = null;
+    this.bulits = null;
+    this.columnGap = null;
+  }
 }
 
 const sliderNameAttr = 'data-slider-name';
