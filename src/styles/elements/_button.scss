@@ -57,4 +57,24 @@
       white-space: nowrap;
     }
   }
+  
+  &_small {
+    display: inline-flex;
+    width: fit-content;
+    height: unset;
+    padding: 12px;
+    border-width: 1px;
+    border-color: $blue;
+    line-height: 1.2;
+    background-color: $white;
+    color: $blue;
+    gap: 10px;
+    
+    @media (hover: hover) {
+      &:hover {
+        background-color: $blue;
+        color: $white;
+      }
+    }
+  }
 }
