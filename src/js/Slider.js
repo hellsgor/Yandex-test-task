@@ -1,0 +1,438 @@
+import { createElement } from '@/js/helpers/create-element.js';
+
+class Slider {
+  sliderElem = null;
+  params = null;
+
+  prewButton = null;
+  nextButton = null;
+  paginationWrapper = null;
+  wrapper = null;
+  slides = null;
+  bulits = null;
+
+  columnGap = null;
+
+  defaultSliderClassName = 'slider';
+  classNames = {
+    default: {
+      prewButton: `${this.defaultSliderClassName}-button_prew`,
+      nextButton: `${this.defaultSliderClassName}-button_next`,
+      paginationWrapper: `${this.defaultSliderClassName}-pagination`,
+      wrapper: `${this.defaultSliderClassName}-wrapper`,
+      slide: `${this.defaultSliderClassName}-slide`,
+    },
+    paginationBulit: `${this.defaultSliderClassName}-pagination__bulit`,
+  };
+  modifiers = {
+    active: 'active',
+  };
+
+  constructor(slider) {
+    this.sliderElem = slider || null;
+    this.params =
+      slidersParams[slider.getAttribute(`${sliderNameAttr}`)] || null;
+
+    this.setBasicParams();
+    this.checkCustomClassNames();
+
+    this.getElements();
+    this.createPagination();
+    this.manageActivityClass('add');
+    this.setButtonsAvailability();
+
+    this.addEvents();
+  }
+
+  /**
+   * Получает элементы слайдера по заданным классам.
+   */
+  getElements() {
+    const getElement = (className) => {
+      return this.sliderElem.querySelector(`.${className}`);
+    };
+
+    this.prewButton = getElement(this.classNames.default.prewButton);
+    this.nextButton = getElement(this.classNames.default.nextButton);
+    this.paginationWrapper = getElement(
+      this.classNames.default.paginationWrapper,
+    );
+    this.wrapper = getElement(this.classNames.default.wrapper);
+    this.slides = Array.from(
+      this.sliderElem.querySelectorAll(`.${this.classNames.default.slide}`),
+    );
+  }
+
+  /**
+   * Устанавливает доступность кнопок в зависимости от индекса активного слайда.
+   * @param {number|null} activeIdx - Индекс активного слайда. Если не указан, будет использован индекс активного слайда.
+   */
+  setButtonsAvailability(activeIdx = null) {
+    if (this.params.loop) return;
+
+    const idx = activeIdx || this.getActiveSlideIndex();
+    const maxIdx = this.slides.length - 1;
+
+    this.prewButton.disabled = idx === 0;
+    this.nextButton.disabled = maxIdx - idx === 0;
+  }
+
+  /**
+   * Устанавливает пагинацию для слайдера в зависимости от параметров.
+   */
+  createPagination() {
+    /**
+     * Создает элементы пагинации в виде точек.
+     */
+    const setBulits = () => {
+      this.paginationWrapper.classList.add(
+        `${this.classNames.default.paginationWrapper}_bulits`,
+      );
+      for (let i = 0; i < this.slides.length; i++) {
+        this.paginationWrapper.appendChild(
+          createElement({
+            tag: 'span',
+            classes: this.classNames.paginationBulit,
+          }),
+        );
+      }
+
+      this.bulits = this.paginationWrapper.querySelectorAll(
+        `.${this.classNames.paginationBulit}`,
+      );
+    };
+
+    // Выбор типа пагинации
+    switch (this.params.pagination) {
+      case 'bulits':
+        setBulits();
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  /**
+   * Управляет классом активности элементов.
+   * @param {string} action - Действие ('add' для добавления класса, 'remove' для удаления класса).
+   * @param {number|null} index - Индекс элемента (необязательный). Если не указан, будет определён автоматически.
+   */
+  manageActivityClass(action, index = null) {
+    /**
+     * Изменяет класс активности элемента.
+     * @param {string} action - Действие ('add' для добавления класса, 'remove' для удаления класса).
+     * @param {HTMLElement} entity - HTML-элемент.
+     * @param {string} className - Имя класса.
+     */
+    const changeActiveClass = (action, entity, className) => {
+      entity.classList[action](`${className}_${this.modifiers.active}`);
+    };
+
+    // Определение индекса элемента
+    const idx = index
+      ? index
+      : action === 'add'
+        ? this.params.openingSlideIndex
+        : this.getActiveSlideIndex();
+
+    /**
+     * Возвращает массив активных элементов.
+     * @returns {Array} - Массив объектов, содержащих активные элементы и их классы.
+     */
+    const getActiveElementsArray = () => {
+      const activeElementsArray = [
+        {
+          entity: this.slides[idx],
+          className: this.classNames.default.slide,
+        },
+      ];
+
+      if (this.params?.pagination === 'bulits') {
+        activeElementsArray.push({
+          entity: this.bulits[idx],
+          className: this.classNames.paginationBulit,
+        });
+      }
+
+      return activeElementsArray;
+    };
+
+    getActiveElementsArray().forEach((entityObj) => {
+      changeActiveClass(action, entityObj.entity, entityObj.className);
+    });
+  }
+
+  /**
+   * Возвращает индекс активного слайда.
+   * @returns {number} Возвращает индекс активного слайда или -1, если активный слайд не найден.
+   */
+  getActiveSlideIndex() {
+    return this.slides.findIndex((slide) =>
+      slide.classList.contains(
+        `${this.classNames.default.slide}_${this.modifiers.active}`,
+      ),
+    );
+  }
+
+  /**
+   * Устанавливает базовым параметры слайдера значения по умолчанию.
+   */
+  setBasicParams() {
+    if (!this.params.loop) this.params.loop = false;
+
+    if (this.params.pagination !== false && !this.params.pagination) {
+      this.params.pagination = 'bulits';
+    }
+
+    if (!this.params.openingSlideIndex) this.params.openingSlideIndex = 0;
+
+    this.params.slidesPerView = this.params.slidesPerView || {};
+    this.params.slidesPerView.desktop = this.params.slidesPerView.desktop || 1;
+    this.params.slidesPerView.tablet = this.params.slidesPerView.tablet || 1;
+    this.params.slidesPerView.mobile = this.params.slidesPerView.mobile || 1;
+
+    if (!this.params.transition) {
+      this.params.transition = 300;
+    }
+  }
+
+  /**
+   * Проверяет пользовательские классы и применяет их, если они установлены в параметрах.
+   */
+  checkCustomClassNames() {
+    Object.keys(this.classNames.default).forEach((key) => {
+      this.params[key] && (this.classNames.default[key] = this.params[key]);
+    });
+  }
+
+  /**
+   * Добавляет слушателей событий для кнопок переключения и изменения размера окна.
+   */
+  addEvents() {
+    this.nextClickHandler = (event) => {
+      this.switchSlide('next', event);
+    };
+
+    this.prewClickHandler = (event) => {
+      this.switchSlide('prew', event);
+    };
+
+    this.resizeHandler = () => {
+      this.getColumnGap();
+      this.wrapper.style.transform = 'translateX(0px)';
+      this.manageActivityClass('remove', this.getActiveSlideIndex());
+      this.slides = Array.from(
+        this.sliderElem.querySelectorAll(`.${this.classNames.default.slide}`),
+      );
+      this.manageActivityClass('add', 0);
+      this.setButtonsAvailability(0);
+    };
+
+    this.debouncedResizeHendler = this.resizeDebounce(this.resizeHandler, 300);
+
+    this.nextButton.addEventListener('click', this.nextClickHandler);
+    this.prewButton.addEventListener('click', this.prewClickHandler);
+    window.addEventListener('resize', this.debouncedResizeHendler);
+  }
+
+  /**
+   * Переключает слайд в слайдере в зависимости от заданного направления.
+   * @param {string} direction - Направление, в котором необходимо переключить слайд ('next' или 'prev').
+   * @param {Event} event - Событие, которое вызвало переключение слайдов.
+   */
+
+  switchSlide(direction, event) {
+    this.disableSliderButton(event);
+
+    this.setTransition();
+    this.wrapper.style.transform = `translateX(${this.getTranslate(direction)}px)`;
+
+    const activeIndex = this.getActiveSlideIndex();
+    const newActiveIndex =
+      direction === 'next' ? activeIndex + 1 : activeIndex - 1;
+    this.manageActivityClass('remove', activeIndex);
+    this.manageActivityClass('add', newActiveIndex);
+    this.setButtonsAvailability(newActiveIndex);
+  }
+
+  /**
+   * Получает значение пространства между колонками (column-gap) элемента-обертки слайдов.
+   * @returns {number} - Значение пространства между колонками в пикселях. Если значение не найдено или равно 'normal', возвращается 0.
+   */
+  getColumnGap() {
+    const columnGapValue = window
+      .getComputedStyle(this.wrapper)
+      .getPropertyValue('column-gap');
+
+    let columnGap = 0;
+
+    if (columnGapValue && columnGapValue !== 'normal') {
+      const matchedValue = columnGapValue.match(/\d+/);
+      if (matchedValue && matchedValue.length > 0) {
+        columnGap = parseInt(matchedValue[0], 10);
+      }
+    }
+
+    this.columnGap = columnGap;
+    return columnGap;
+  }
+
+  /**
+   * Вычисляет значение смещения (translate) для прокрутки следующего или предыдущего слайда.
+   * @param {string} direction - Направление прокрутки: 'next' для следующего, 'prew' для предыдущего.
+   * @returns {number} - Значение смещения для прокрутки слайдов.
+   */
+  getTranslate(direction) {
+    // Рассчитываем значение смещения на основе ширины активного слайда и промежутка между колонками
+    const translateValue =
+      this.slides[this.getActiveSlideIndex()].offsetWidth +
+      (this.columnGap || this.getColumnGap());
+
+    // Получаем текущее значение смещения по X из стиля wrapper
+    const currentTranslateX = parseInt(
+      this.wrapper.style.transform.match(/translateX\(([-+]?\d+)px\)/)?.[1] ||
+        0,
+      10,
+    );
+
+    // Возвращаем значение смещения в зависимости от направления
+    return direction === 'next'
+      ? currentTranslateX - translateValue
+      : currentTranslateX + translateValue;
+  }
+
+  /**
+   * Устанавливает длительность и кривую промежуточных точек прокрутки слайдов.
+   */
+  setTransition() {
+    this.wrapper.style.transition = `transform ${this.params.transition / 1000}s ease-in-out`;
+
+    setTimeout(() => {
+      this.wrapper.style.transition = '';
+    }, this.params.transition + 5);
+  }
+
+  /**
+   * Отключает события мыши для кнопки слайдера на заданное время.
+   * @param {MouseEvent} event - Событие, которое вызвало метод.
+   */
+  disableSliderButton({ target }) {
+    target.style.pointerEvents = 'none';
+    setTimeout(() => {
+      target.style.pointerEvents = '';
+    }, this.params.transition + 100);
+  }
+
+  /**
+   * Уничтожает слайдер, удаляя все обработчики событий и возвращая исходное состояние элементов.
+   */
+  destroy() {
+    this.removeEvents();
+    this.resetButtonsAvailability();
+    this.resetPagination();
+    this.clearProperties();
+  }
+
+  /**
+   * Удаляет все обработчики событий, добавленные к слайдеру.
+   */
+  removeEvents() {
+    this.prewButton.removeEventListener('click', this.prewClickHandler);
+    this.prewClickHandler = null;
+
+    this.nextButton.removeEventListener('click', this.nextClickHandler);
+    this.nextClickHandler = null;
+
+    window.removeEventListener('resize', this.resizeHandler);
+    this.resizeHandler = null;
+  }
+
+  /**
+   * Сбрасывает доступность кнопок слайдера.
+   */
+  resetButtonsAvailability() {
+    this.prewButton.disabled = false;
+    this.nextButton.disabled = false;
+  }
+
+  /**
+   * Удаляет пагинацию из слайдера.
+   */
+  resetPagination() {
+    this.paginationWrapper.innerHTML = '';
+    this.paginationWrapper.classList.remove(
+      `${this.classNames.default.paginationWrapper}_bulits`,
+    );
+  }
+
+  /**
+   * Очищает свойства.
+   */
+  clearProperties() {
+    this.sliderElem = null;
+    this.params = null;
+    this.prewButton = null;
+    this.nextButton = null;
+    this.paginationWrapper = null;
+    this.wrapper = null;
+    this.slides = null;
+    this.bulits = null;
+    this.columnGap = null;
+  }
+
+  resizeDebounce(callee, timeoutMs) {
+    return function perform(...args) {
+      let previousCall = this.lastCall;
+
+      this.lastCall = Date.now();
+
+      if (previousCall && this.lastCall - previousCall <= timeoutMs) {
+        clearTimeout(this.lastCallTimer);
+      }
+
+      this.lastCallTimer = setTimeout(() => callee(...args), timeoutMs);
+    };
+  }
+}
+
+const sliderNameAttr = 'data-slider-name';
+
+const slidersParams = {
+  /**
+   * возможные параметры:
+   *
+   * ключом является имя слайдера
+   *
+   * prewButton- css-класс кнопки предыдущего слайда. Необязательный параметр, предусмотрено значение по умолчанию;
+   * nextButton - css-класс кнопки следующего слайда. Необязательный параметр, предусмотрено значение по умолчанию;
+   * paginationWrapper - css-класс контейнера пагинации. Необязательный параметр, предусмотрено значение по умолчанию;
+   * wrapper - css-класс контейнера слайдов. Необязательный параметр, предусмотрено значение по умолчанию;
+   * slide - css-класс контейнера слайдов. Необязательный параметр, предусмотрено значение по умолчанию;
+   *
+   * loop - зацикленность слайдера. Необязательный параметр. Значение по умолчанию - false.
+   *
+   * pagination - тип пагинации. Возможные значения: 'bulits' || 'nums' || true || false.
+   * true - пагинация включена. Тип пагинации по умолчанию - 'bulits'.
+   * false - пагинация отключена. Falsy-значения включат пагинацию с типом по умолчанию.
+   *
+   * openingSlide - начальный слайд, необязательный параметр.
+   * Значение по умолчанию - 0;
+   *
+   * slidesPerView - количество одновременно видимых слайдов для отдельных брэйкпоинтов (desktop, tablet, mobile).
+   * Значение по умолчанию - 1
+   *
+   * transition - время, в миллисекундах, за которое слайды должны переключиться.
+   * Значение по умолчанию - 300ms
+   * */
+  stages: {
+    wrapper: 'stages__list',
+    loop: false,
+  },
+};
+
+export function initSliders() {
+  document
+    .querySelectorAll(`[${sliderNameAttr}]`)
+    .forEach((slider) => new Slider(slider));
+}
