@@ -233,6 +233,33 @@ class Slider {
   }
 
   /**
+   * Возвращает индекс нового активного слайда.
+   * @returns {number} Возвращает индекс нового активного слайда.
+   */
+  getNewSlideIndex(direction) {
+    if (this.params.loop) {
+      if (
+        direction === 'next' &&
+        this.getActiveSlideIndex() + this.getSlidesPerView() ===
+          this.slides.length
+      ) {
+        return 0;
+      }
+
+      if (
+        direction === 'prew' &&
+        this.getActiveSlideIndex() - this.getSlidesPerView() < 0
+      ) {
+        return this.slides.length - this.getSlidesPerView();
+      }
+    }
+
+    return direction === 'next'
+      ? this.getActiveSlideIndex() + this.getSlidesPerView()
+      : this.getActiveSlideIndex() - this.getSlidesPerView();
+  }
+
+  /**
    * Устанавливает базовым параметры слайдера значения по умолчанию.
    */
   setDefaultParams() {
@@ -307,13 +334,11 @@ class Slider {
     this.setTransition();
     this.wrapper.style.transform = `translateX(${this.getTranslate(direction)}px)`;
 
-    const activeIndex = this.getActiveSlideIndex();
-    const newActiveIndex =
-      direction === 'next'
-        ? activeIndex + this.getSlidesPerView()
-        : activeIndex - this.getSlidesPerView();
-    this.manageActivityClass('remove', activeIndex);
+    const newActiveIndex = this.getNewSlideIndex(direction);
+
+    this.manageActivityClass('remove', this.getActiveSlideIndex());
     this.manageActivityClass('add', newActiveIndex);
+
     this.setButtonsAvailability(newActiveIndex);
   }
 
@@ -345,6 +370,23 @@ class Slider {
    * @returns {number} - Значение смещения для прокрутки слайдов.
    */
   getTranslate(direction) {
+    if (this.params.loop) {
+      if (
+        direction === 'next' &&
+        this.getActiveSlideIndex() + this.getSlidesPerView() ===
+          this.slides.length
+      ) {
+        return 0;
+      }
+
+      if (
+        direction === 'prew' &&
+        this.getActiveSlideIndex() - this.getSlidesPerView() < 0
+      ) {
+        return this.sliderElem.offsetWidth - this.wrapper.scrollWidth;
+      }
+    }
+
     // Рассчитываем значение смещения на основе ширины активного слайда и промежутка между колонками
     const translateValue =
       (this.slides[this.getActiveSlideIndex()].offsetWidth +
@@ -511,6 +553,7 @@ const slidersParams = {
       mobile: 1,
     },
     pagination: 'nums',
+    loop: true,
   },
 };
 
