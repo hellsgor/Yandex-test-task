@@ -81,15 +81,16 @@ class Slider {
       return this.sliderElem.querySelector(`.${className}`);
     };
 
-    this.prewButton = getElement(this.classNames.default.prewButton);
-    this.nextButton = getElement(this.classNames.default.nextButton);
-    this.paginationWrapper = getElement(
-      this.classNames.default.paginationWrapper,
-    );
-    this.wrapper = getElement(this.classNames.default.wrapper);
-    this.slides = Array.from(
-      this.sliderElem.querySelectorAll(`.${this.classNames.default.slide}`),
-    );
+    Object.keys(this.classNames.default).forEach((key) => {
+      if (key === 'slide') {
+        this.slides = Array.from(
+          this.sliderElem.querySelectorAll(`.${this.classNames.default.slide}`),
+        );
+        return;
+      }
+
+      this[key] = getElement(this.classNames.default[key]);
+    });
   }
 
   /**
