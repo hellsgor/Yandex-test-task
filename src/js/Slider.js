@@ -99,16 +99,16 @@ class Slider {
      * Создает элементы пагинации в виде точек.
      */
     const setBulits = () => {
-      this.paginationWrapper.classList.add(
-        `${this.classNames.default.paginationWrapper}_bulits`,
-      );
-      for (let i = 0; i < this.slides.length; i++) {
-        this.paginationWrapper.appendChild(
-          createElement({
-            tag: 'span',
-            classes: this.classNames.paginationBulit,
-          }),
-        );
+      const slidesPerView = this.getSlidesPerView();
+      for (let i = 1; i <= this.slides.length; i++) {
+        if (i % slidesPerView === 0) {
+          this.paginationWrapper.appendChild(
+            createElement({
+              tag: 'span',
+              classes: this.classNames.paginationBulit,
+            }),
+          );
+        }
       }
 
       this.bulits = this.paginationWrapper.querySelectorAll(
@@ -143,7 +143,7 @@ class Slider {
       entity.classList[action](`${className}_${this.modifiers.active}`);
     };
 
-    // Определение индекса элемента
+    // Определение индекса активного элемента
     const idx = index
       ? index
       : action === 'add'
@@ -164,7 +164,7 @@ class Slider {
 
       if (this.params?.pagination === 'bulits') {
         activeElementsArray.push({
-          entity: this.bulits[idx],
+          entity: this.bulits[Math.floor(idx / this.getSlidesPerView())],
           className: this.classNames.paginationBulit,
         });
       }
@@ -174,6 +174,9 @@ class Slider {
 
     getActiveElementsArray().forEach((entityObj) => {
       changeActiveClass(action, entityObj.entity, entityObj.className);
+      if (entityObj.entity) {
+        changeActiveClass(action, entityObj.entity, entityObj.className);
+      }
     });
   }
 
@@ -237,10 +240,11 @@ class Slider {
     this.resizeHandler = () => {
       this.getColumnGap();
       this.wrapper.style.transform = 'translateX(0px)';
-      this.manageActivityClass('remove', this.getActiveSlideIndex());
+      this.manageActivityClass('remove');
       this.slides = Array.from(
         this.sliderElem.querySelectorAll(`.${this.classNames.default.slide}`),
       );
+      this.createPagination();
       this.manageActivityClass('add');
       this.setButtonsAvailability(0);
     };
