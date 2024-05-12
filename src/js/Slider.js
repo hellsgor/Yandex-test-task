@@ -1,4 +1,4 @@
-import { createElement } from '@/js/helpers/create-element.js';
+import { createElement } from '@/js/helpers/createElement.js';
 import { resolutionChecker } from '@/js/helpers/ResolutionChecker.js';
 
 /**
