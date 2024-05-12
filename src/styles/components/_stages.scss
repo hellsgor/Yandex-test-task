@@ -39,6 +39,7 @@
   &__item {
     position: relative;
     display: block;
+    overflow: hidden;
     min-height: 112px;
     padding: 20px 22px 20px 72px;
     font-weight: 500;
@@ -50,20 +51,21 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background-repeat: no-repeat;
-      background-size: cover;
-      
     }
     
     &::before {
-      z-index: -1;
-      opacity: 0.8;
-      background-image: url('/images/stages/paper.png');
+      z-index: -2;
+      opacity: .8;
+      box-shadow: 5px 4px 12.7px 0 rgba(0, 0, 0, 0.25);
+      background: url('/images/textures/paper.png') center no-repeat;
+      background-size: 2400px 3225px;
       content: '';
     }
     
     &-overlay {
-      z-index: 1;
+      z-index: -1;
+      background: url("/images/textures/overlay.jpeg") lightgray -542.21px -37.269px/121.971% 265.886% no-repeat;
+      background-size: 1445px;
       mix-blend-mode: color-burn;
     }
     
@@ -220,13 +222,13 @@
         position: absolute;
         top: 0;
         left: 0;
-        z-index: -1;
+        z-index: -2;
         opacity: 0.8;
         width: 100%;
         height: 100%;
-        background-image: url('/images/stages/paper.png');
-        background-repeat: no-repeat;
-        background-size: cover;
+        box-shadow: 5px 4px 12.7px 0 rgba(0, 0, 0, 0.25);
+        background: url('/images/textures/paper.png') center no-repeat;
+        background-size: 2400px 3225px;
         content: '';
       }
       
@@ -248,6 +250,7 @@
           position: absolute;
           top: 0;
           left: 0;
+          z-index: -1;
           width: 100%;
           height: 100%;
         }

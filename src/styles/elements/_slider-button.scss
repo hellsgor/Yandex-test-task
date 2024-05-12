@@ -2,34 +2,37 @@
 @import '../global/mixins';
 
 .slider-button {
-  display: flex;
+  position: relative;
   width: 44px;
   height: 44px;
   border: none;
   border-radius: 50%;
-  align-items: center;
-  justify-content: center;
   background-color: $txt-black;
   cursor: pointer;
   transition: background-color .2s ease-in-out;
   
+  &_prew {
+    .slider-button__arrow {
+      transform: rotate(-180deg) translate(-50%, 50%);
+    }
+  }
+  
   &__arrow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
     display: flex;
     width: 14px;
     height: 20px;
     padding-left: 2px;
     align-items: center;
     justify-content: center;
+    transform: translate(-50%, -50%);
+    transform-origin: left center;
     
     svg {
       stroke: $white;
       fill: none;
-    }
-  }
-  
-  &_prew {
-    .slider-button__arrow {
-      rotate: 180deg;
     }
   }
   
