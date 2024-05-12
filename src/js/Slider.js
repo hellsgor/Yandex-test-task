@@ -31,6 +31,7 @@ class Slider {
 
   defaultParams = {
     loop: false,
+    autoplay: false,
     pagination: 'bulits',
     openingSlideIndex: 0,
     slidesPerView: {
@@ -39,6 +40,19 @@ class Slider {
       mobile: 1,
     },
     transition: 300,
+  };
+
+  autoplay = {
+    timer: null,
+    start: () => {
+      this.startAutoplay();
+    },
+    stop: () => {
+      this.stopAutoplay();
+    },
+    check: () => {
+      this.checkAutoplayParam();
+    },
   };
 
   constructor(slider) {
@@ -55,6 +69,8 @@ class Slider {
     this.setButtonsAvailability();
 
     this.addEvents();
+
+    this.autoplay.check();
   }
 
   /**
@@ -281,6 +297,12 @@ class Slider {
     this.params.slidesPerView.desktop = this.params.slidesPerView.desktop || 1;
     this.params.slidesPerView.tablet = this.params.slidesPerView.tablet || 1;
     this.params.slidesPerView.mobile = this.params.slidesPerView.mobile || 1;
+
+    if (this.params.autoplay && Number.isInteger(this.params.autoplay)) {
+      this.params.loop = this.params.loop || true;
+    } else {
+      this.params.autoplay = false;
+    }
   }
 
   /**
@@ -297,11 +319,15 @@ class Slider {
    */
   addEvents() {
     this.nextClickHandler = (event) => {
+      this.autoplay.stop();
       this.switchSlide('next', event);
+      this.autoplay.check();
     };
 
     this.prewClickHandler = (event) => {
+      this.autoplay.stop();
       this.switchSlide('prew', event);
+      this.autoplay.check();
     };
 
     this.resizeHandler = () => {
@@ -328,8 +354,8 @@ class Slider {
    * @param {Event} event - Событие, которое вызвало переключение слайдов.
    */
 
-  switchSlide(direction, event) {
-    this.disableSliderButton(event);
+  switchSlide(direction, event = null) {
+    event?.target && this.disableSliderButton(event);
 
     this.setTransition();
     this.wrapper.style.transform = `translateX(${this.getTranslate(direction)}px)`;
@@ -511,6 +537,30 @@ class Slider {
     if (resolutionChecker.isTablet()) return this.params.slidesPerView.tablet;
     return this.params.slidesPerView.desktop;
   }
+
+  /**
+   * Запускает автоматическое переключение слайдов.
+   */
+  startAutoplay() {
+    this.autoplay.timer = setInterval(() => {
+      this.switchSlide('next');
+    }, this.params.autoplay);
+  }
+
+  /**
+   * Останавливает автоматическое переключение слайдов.
+   */
+  stopAutoplay() {
+    if (this.autoplay.timer) clearInterval(this.autoplay.timer);
+  }
+
+  /**
+   * Проверяет параметр автопереключения слайдов
+   * и начинает автопереключение, если параметр установлен.
+   */
+  checkAutoplayParam() {
+    if (this.params.autoplay) this.startAutoplay();
+  }
 }
 
 const sliderNameAttr = 'data-slider-name';
@@ -566,7 +616,7 @@ const slidersParams = {
       mobile: 1,
     },
     pagination: 'nums',
-    loop: true,
+    autoplay: 4000,
   },
 };
 
