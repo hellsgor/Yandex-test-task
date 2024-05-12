@@ -1,9 +1,13 @@
-<div
-  class="slider-button{{#if prew}} slider-button_prew{{else}} slider-button_next{{/if}}{{#if classes}} {{classes}}{{/if}}"
->
-  <span class="slider-button__arrow">
-    <svg>
-      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow"/>
-    </svg>
-  </span>
+<div class="slider-button">
+  <button
+    class="slider-button__item{{#if prew}} slider-button__item_prew{{else}} slider-button__item_next{{/if}}{{#if classes}} {{classes}}{{/if}}"
+    type="button"
+  >
+    <span class="slider-button__arrow">
+      <svg>
+        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow"/>
+      </svg>
+    </span>
+  </button>
 </div>
+

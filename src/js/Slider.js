@@ -18,8 +18,8 @@ class Slider {
   defaultSliderClassName = 'slider';
   classNames = {
     default: {
-      prewButton: `${this.defaultSliderClassName}-button_prew`,
-      nextButton: `${this.defaultSliderClassName}-button_next`,
+      prewButton: `${this.defaultSliderClassName}-button__item_prew`,
+      nextButton: `${this.defaultSliderClassName}-button__item_next`,
       paginationWrapper: `${this.defaultSliderClassName}-pagination`,
       wrapper: `${this.defaultSliderClassName}-wrapper`,
       slide: `${this.defaultSliderClassName}-slide`,
@@ -74,7 +74,7 @@ class Slider {
     this.getElements();
     this.createPagination();
     this.manageActivityClass('add');
-    this.setButtonsAvailability();
+    this.setButtonsAvailability(this.params.openingSlideIndex);
 
     this.addEvents();
 
