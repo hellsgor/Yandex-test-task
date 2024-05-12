@@ -1,0 +1,7 @@
+<div class="ticker__wrapper marquee"
+    {{#if this.areaAttr}}aria-hidden="true"{{/if}}
+>
+  {{#each this.elements}}
+    {{> elements/ticker-slide this}}
+  {{/each}}
+</div>

@@ -1,0 +1,28 @@
+@keyframes hand-rotate {
+  from {
+    rotate: 39.9deg;
+  }
+  
+  2% {
+    rotate: 20deg;
+  }
+  3% {
+    rotate: 39.9deg;
+  }
+  
+  35% {
+    rotate: 30deg;
+  }
+  
+  60% {
+    rotate: 35deg;
+  }
+  
+  80% {
+    rotate: 28deg;
+  }
+  
+  to {
+    rotate: 39.9deg;
+  }
+}

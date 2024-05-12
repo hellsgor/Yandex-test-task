@@ -1,0 +1,16 @@
+@import '../global/colors';
+@import '../global/mixins/media';
+
+.footer {
+  padding: 40px 0 72px;
+  background-color: $beige;
+  
+  &__text {
+    opacity: .6;
+    font-size: 16px;
+  }
+  
+  @include max-media(640px) {
+    padding: 40px 0 60px;
+  }
+}

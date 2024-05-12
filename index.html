@@ -12,5 +12,18 @@
   <title>Клуб четырех коней</title>
 </head>
 <body>
+{{>header}}
+<main>
+  <h1 class="visually-hidden">Клуб четырёх коней. Турнир в Васюках</h1>
+  {{> hero}}
+  {{> ticker this.tickerSlides}}
+  {{> idea}}
+  {{> tournament}}
+  {{> stages}}
+  {{> members}}
+  {{> ticker this.tickerSlides}}
+</main>
+{{> footer}}
+{{> elements/icons}}
 </body>
 </html>

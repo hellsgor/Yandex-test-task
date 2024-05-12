@@ -1,0 +1,60 @@
+@import '../global/colors';
+@import '../global/mixins/media';
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: $white;
+}
+
+.section {
+  &__container {
+    width: 100%;
+    max-width: 1222px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+  
+  @include max-media(1240px) {
+    &__container {
+      max-width: 1000px;
+    }
+  }
+  
+  @include max-media(1024px) {
+    &__container {
+      max-width: 840px;
+    }
+  }
+  
+  @include max-media(880px) {
+    &__container {
+      max-width: 640px;
+    }
+  }
+  
+  @include max-media(640px) {
+    width: 100%;
+    max-width: unset;
+    
+    &__container {
+      padding-right: 20px;
+      padding-left: 20px;
+    }
+  }
+}
+
+.visually-hidden {
+  position: absolute;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  border: 0;
+  margin: -1px;
+  white-space: nowrap;
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+}

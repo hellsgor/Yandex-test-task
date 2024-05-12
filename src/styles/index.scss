@@ -4,4 +4,19 @@
 @import 'global/colors';
 @import 'global/mixins/index';
 @import 'global/typography';
-@import 'global/section';
+@import 'global/base';
+
+@import 'components/logo';
+@import 'components/header';
+@import 'components/hero';
+@import 'components/ticker';
+@import 'components/idea';
+@import 'components/tournament';
+@import 'components/stages';
+@import 'components/member';
+@import 'components/members';
+@import 'components/footer';
+
+@import "elements/button";
+@import "elements/slider-button";
+@import "elements/slider-pagination";

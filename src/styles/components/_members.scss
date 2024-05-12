@@ -1,0 +1,69 @@
+@import '../global/colors';
+@import '../global/mixins/media';
+
+.members {
+  margin-bottom: 141px;
+  
+  &__wrapper {
+    position: relative;
+  }
+  
+  &__heading {
+    margin-bottom: 60px;
+  }
+  
+  &__slider {
+    overflow: hidden;
+  }
+  
+  &__inner {
+    display: flex;
+    column-gap: 20px;
+  }
+  
+  &__navigation {
+    position: absolute;
+    top: 10px;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 15px;
+  }
+  
+  @include max-media(1024px) {
+    &__heading {
+      max-width: 600px;
+    }
+    
+    &__inner {
+      column-gap: 32px;
+    }
+    
+    &__navigation {
+      top: 42px;
+    }
+  }
+  
+  @include max-media(880px) {
+    &__inner {
+      column-gap: 20px;
+    }
+  }
+  
+  @include max-media(640px) {
+    margin-bottom: 101px;
+    
+    &__heading {
+      margin-bottom: 40px;
+    }
+    &__inner {
+      margin-bottom: 40px;
+    }
+    
+    &__navigation {
+      position: static;
+      column-gap: 12px;
+    }
+  }
+}
