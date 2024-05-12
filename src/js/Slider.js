@@ -116,10 +116,46 @@ class Slider {
       );
     };
 
-    // Выбор типа пагинации
+    /**
+     * Создает элементы пагинации в виде цифр.
+     */
+    const setNums = () => {
+      [
+        '',
+        '/',
+        Math.ceil(this.slides.length / this.getSlidesPerView()),
+      ].forEach((item) => {
+        this.paginationWrapper.appendChild(
+          createElement({
+            tag: 'span',
+            text: item,
+          }),
+        );
+      });
+    };
+
+    // очистка контейнера пагинации
+    this.paginationWrapper.innerHTML = '';
+
+    // добавление класса контейнеру пагинации соответствующего типу пагинации
+    if (
+      !this.paginationWrapper.classList.contains(
+        `${this.classNames.default.paginationWrapper}_${this.params.pagination}`,
+      )
+    ) {
+      this.paginationWrapper.classList.add(
+        `${this.classNames.default.paginationWrapper}_${this.params.pagination}`,
+      );
+    }
+
+    // Выбор функции наполнения контейнера пагинации
     switch (this.params.pagination) {
       case 'bulits':
         setBulits();
+        break;
+
+      case 'nums':
+        setNums();
         break;
 
       default:
@@ -173,9 +209,13 @@ class Slider {
     };
 
     getActiveElementsArray().forEach((entityObj) => {
-      changeActiveClass(action, entityObj.entity, entityObj.className);
       if (entityObj.entity) {
         changeActiveClass(action, entityObj.entity, entityObj.className);
+      }
+
+      if (this.params?.pagination === 'nums') {
+        this.paginationWrapper.querySelector('span').innerText =
+          Math.floor(idx / this.getSlidesPerView()) + 1;
       }
     });
   }
@@ -470,6 +510,7 @@ const slidersParams = {
       tablet: 2,
       mobile: 1,
     },
+    pagination: 'nums',
   },
 };
 
