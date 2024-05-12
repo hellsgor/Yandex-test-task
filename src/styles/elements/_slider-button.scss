@@ -1,9 +1,10 @@
 @import '../global/colors';
+@import '../global/mixins';
 
 .slider-button {
   display: flex;
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
   border: none;
   border-radius: 50%;
   align-items: center;
@@ -41,5 +42,10 @@
   &:disabled {
     opacity: .2;
     pointer-events: none;
+  }
+  
+  @include max-media(640px) {
+    width: 36px;
+    height: 36px;
   }
 }

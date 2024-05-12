@@ -1,8 +1,8 @@
 class ResolutionChecker {
   constructor() {
-    this.tabletResolution = 1199;
-    this.mobileResolution = 767;
-    this.extraMobileResolution = 450;
+    this.tabletResolution = 1024;
+    this.mobileResolution = 640;
+    this.extraMobileResolution = 370;
   }
 
   isTablet() {

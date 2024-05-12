@@ -16,7 +16,7 @@ const checkStagesSlides = () => {
   }
 
   stagesSlidesMobileState = manageStagesSlides(
-    resolutionChecker.isCustom(640),
+    resolutionChecker.isMobile(),
     stagesSlidesMobileState,
     groupedStagesIndexes,
   );
@@ -24,9 +24,12 @@ const checkStagesSlides = () => {
 
 document.addEventListener('DOMContentLoaded', () => {
   checkStagesSlides();
-  initSliders();
+  sliders = initSliders();
 
   window.addEventListener('resize', () => {
     checkStagesSlides();
+    sliders.forEach((slider) => {
+      slider.debouncedResizeHendler();
+    });
   });
 });
