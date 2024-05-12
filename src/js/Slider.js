@@ -1,6 +1,9 @@
 import { createElement } from '@/js/helpers/create-element.js';
 import { resolutionChecker } from '@/js/helpers/ResolutionChecker.js';
 
+/**
+ * Класс для создания слайдера с возможностью автопрокрутки, пагинацией и управлением слайдами.
+ */
 class Slider {
   sliderElem = null;
   params = null;
@@ -55,8 +58,13 @@ class Slider {
     },
   };
 
+  /**
+   * Создает экземпляр слайдера.
+   * @param {HTMLElement} slider - Элемент слайдера.
+   */
+
   constructor(slider) {
-    this.sliderElem = slider || null;
+    this.sliderElem = slider;
     this.params =
       slidersParams[slider.getAttribute(`${sliderNameAttr}`)] || null;
 
@@ -151,10 +159,14 @@ class Slider {
       });
     };
 
-    // очистка контейнера пагинации
+    /**
+     * Очистка контейнера пагинации
+     * */
     this.paginationWrapper.innerHTML = '';
 
-    // добавление класса контейнеру пагинации соответствующего типу пагинации
+    /**
+     * Добавление класса контейнеру пагинации соответствующего типу пагинации
+     * */
     if (
       !this.paginationWrapper.classList.contains(
         `${this.classNames.default.paginationWrapper}_${this.params.pagination}`,
@@ -165,7 +177,9 @@ class Slider {
       );
     }
 
-    // Выбор функции наполнения контейнера пагинации
+    /**
+     * Выбор функции наполнения контейнера пагинации
+     */
     switch (this.params.pagination) {
       case 'bulits':
         setBulits();
@@ -196,7 +210,10 @@ class Slider {
       entity.classList[action](`${className}_${this.modifiers.active}`);
     };
 
-    // Определение индекса активного элемента
+    /**
+     * Определение индекса активного элемента
+     * @type {number}
+     */
     const idx = index
       ? index
       : action === 'add'
@@ -230,6 +247,9 @@ class Slider {
         changeActiveClass(action, entityObj.entity, entityObj.className);
       }
 
+      /**
+       * Устанавливает значение текущей группы слайдов в пагинацию при числовом типе пагинации
+       */
       if (this.params?.pagination === 'nums') {
         this.paginationWrapper.querySelector('span').innerText =
           Math.floor(idx / this.getSlidesPerView()) + 1;
@@ -250,9 +270,12 @@ class Slider {
   }
 
   /**
-   * Возвращает индекс нового активного слайда.
-   * @returns {number} Возвращает индекс нового активного слайда.
+   * Вычисляет новый индекс слайда на основе направления и текущих настроек.
+   *
+   * @param {string} direction - Направление, в котором нужно переместить слайд ('next' или 'prew').
+   * @returns {number} - Новый индекс слайда после перемещения в указанном направлении.
    */
+
   getNewSlideIndex(direction) {
     if (this.params.loop) {
       if (
@@ -277,7 +300,7 @@ class Slider {
   }
 
   /**
-   * Устанавливает базовым параметры слайдера значения по умолчанию.
+   * Устанавливает базовым параметрам слайдера значения по умолчанию.
    */
   setDefaultParams() {
     if (!this.params) {
@@ -350,9 +373,9 @@ class Slider {
   }
 
   /**
-   * Переключает слайд в слайдере в зависимости от заданного направления.
+   * Переключает слайд в зависимости от заданного направления.
    * @param {string} direction - Направление, в котором необходимо переключить слайд ('next' или 'prev').
-   * @param {Event} event - Событие, которое вызвало переключение слайдов.
+   * @param {MouseEvent | null | Object} event - Событие, которое вызвало переключение слайдов.
    */
 
   switchSlide(direction, event = null) {
@@ -414,20 +437,29 @@ class Slider {
       }
     }
 
-    // Рассчитываем значение смещения на основе ширины активного слайда и промежутка между колонками
+    /**
+     * Рассчитываем значение смещения на основе ширины активного слайда,
+     * отступа между колонками и количеством видимых слайдов
+     * @type {number}
+     */
     const translateValue =
       (this.slides[this.getActiveSlideIndex()].offsetWidth +
         (this.columnGap || this.getColumnGap())) *
       this.getSlidesPerView();
 
-    // Получаем текущее значение смещения по X из стиля wrapper
+    /**
+     * Получаем текущее значение смещения по X из стиля wrapper
+     * @type {number}
+     */
     const currentTranslateX = parseInt(
       this.wrapper.style.transform.match(/translateX\(([-+]?\d+)px\)/)?.[1] ||
         0,
       10,
     );
 
-    // Возвращаем значение смещения в зависимости от направления
+    /**
+     * Возвращаем значение смещения в зависимости от направления
+     */
     return direction === 'next'
       ? currentTranslateX - translateValue
       : currentTranslateX + translateValue;
@@ -453,60 +485,6 @@ class Slider {
     setTimeout(() => {
       target.style.pointerEvents = '';
     }, this.params.transition + 1);
-  }
-
-  /**
-   * Уничтожает слайдер, удаляя все обработчики событий и возвращая исходное состояние элементов.
-   */
-  destroy() {
-    this.removeEvents();
-    this.resetButtonsAvailability();
-    this.resetPagination();
-    this.clearProperties();
-  }
-
-  /**
-   * Удаляет все обработчики событий, добавленные к слайдеру.
-   */
-  removeEvents() {
-    this.prewButton.removeEventListener('click', this.prewClickHandler);
-    this.prewClickHandler = null;
-
-    this.nextButton.removeEventListener('click', this.nextClickHandler);
-    this.nextClickHandler = null;
-
-    window.removeEventListener('resize', this.resizeHandler);
-    this.resizeHandler = null;
-  }
-
-  /**
-   * Сбрасывает доступность кнопок слайдера.
-   */
-  resetButtonsAvailability() {
-    this.prewButton.disabled = false;
-    this.nextButton.disabled = false;
-  }
-
-  /**
-   * Удаляет пагинацию из слайдера.
-   */
-  resetPagination() {
-    this.paginationWrapper.innerHTML = '';
-    this.paginationWrapper.classList.remove(
-      `${this.classNames.default.paginationWrapper}_bulits`,
-    );
-  }
-
-  /**
-   * Очищает свойства.
-   */
-  clearProperties() {
-    Object.keys(this).forEach((key) => {
-      const value = this[key];
-      if (value !== null && typeof value !== 'function') {
-        this[key] = null;
-      }
-    });
   }
 
   /**
@@ -561,6 +539,60 @@ class Slider {
    */
   checkAutoplayParam() {
     if (this.params.autoplay) this.startAutoplay();
+  }
+
+  /**
+   * Уничтожает слайдер, удаляя все обработчики событий и возвращая исходное состояние элементов.
+   */
+  destroy() {
+    /**
+     * Удаляет все обработчики событий, добавленные к слайдеру.
+     */
+    const removeEvents = () => {
+      this.prewButton.removeEventListener('click', this.prewClickHandler);
+      this.prewClickHandler = null;
+
+      this.nextButton.removeEventListener('click', this.nextClickHandler);
+      this.nextClickHandler = null;
+
+      window.removeEventListener('resize', this.resizeHandler);
+      this.resizeHandler = null;
+    };
+
+    /**
+     * Сбрасывает доступность кнопок слайдера.
+     */
+    const resetButtonsAvailability = () => {
+      this.prewButton.disabled = false;
+      this.nextButton.disabled = false;
+    };
+
+    /**
+     * Удаляет пагинацию из слайдера.
+     */
+    const resetPagination = () => {
+      this.paginationWrapper.innerHTML = '';
+      this.paginationWrapper.classList.remove(
+        `${this.classNames.default.paginationWrapper}_bulits`,
+      );
+    };
+
+    /**
+     * Очищает свойства.
+     */
+    const clearProperties = () => {
+      Object.keys(this).forEach((key) => {
+        const value = this[key];
+        if (value !== null && typeof value !== 'function') {
+          this[key] = null;
+        }
+      });
+    };
+
+    removeEvents();
+    resetButtonsAvailability();
+    resetPagination();
+    clearProperties();
   }
 }
 
