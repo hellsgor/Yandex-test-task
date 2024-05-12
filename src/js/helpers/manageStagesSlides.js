@@ -1,5 +1,5 @@
 import { store } from '@/store/store.js';
-import { createElement } from '@/js/helpers/create-element.js';
+import { createElement } from '@/js/helpers/createElement.js';
 
 /**
  * Управляет слайдами этапов в зависимости от текущего состояния экрана.
