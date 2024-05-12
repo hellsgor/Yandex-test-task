@@ -41,12 +41,8 @@ export function manageStagesSlides(
     const img =
       !isGroupable || !isMobile
         ? createElement({
-            tag: 'img',
+            tag: 'div',
             classes: 'stages__item-overlay',
-            attributes: [
-              { name: 'alt', value: '' },
-              { name: 'src', value: '/images/stages/overlay.png' },
-            ],
           })
         : null;
 
